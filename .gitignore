@@ -1,0 +1,11 @@
+# Cmake build cache
+build/
+cmake-build-debug/
+
+# MacOS Cache
+.DS_Store
+
+# Editor settings
+.vs/
+.vscode/
+.idea/
