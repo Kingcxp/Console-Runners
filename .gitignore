@@ -9,3 +9,6 @@ cmake-build-debug/
 .vs/
 .vscode/
 .idea/
+
+# Test files
+test*

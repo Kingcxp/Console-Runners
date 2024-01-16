@@ -7,12 +7,12 @@
 typedef struct Game {
     // Methods
 
-    void (*loop)(struct Game *);
+    void        (*loop)(struct Game *);
 
     // Variables
 
-    Globals *mGlobals;
-    bool mIsLooping;
+    Globals     *globals;
+    bool        isLooping;
 } Game;
 
 #endif // GAME_H
