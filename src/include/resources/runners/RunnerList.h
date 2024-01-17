@@ -2,7 +2,7 @@
 #define RUNNER_LIST
 
 
-#include "../../GameElements/Runner.h"
+#include "../../elements/Runner.h"
 #include "basical.h"
 
 typedef enum RunnerType {

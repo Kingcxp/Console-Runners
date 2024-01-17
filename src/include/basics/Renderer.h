@@ -2,20 +2,18 @@
 #define RENDERER
 
 
+#include <stdio.h>
 #include <wchar.h>
 #include <stdbool.h>
-#include "../basics/CollisionBox.h"
-#include "../basics/boxchar/boxchar.h"
+#include "Definitions.h"
 
 typedef struct Renderer {
     // Methods
 
-    void            (*renderCharAt)(const Renderer *this, const wchar_t *ch, const Color *color, const Vector2i *position);
-    void            (*renderStringAt)(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position);
-    void            (*renderRectAt)(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *dstRect, const Vector2i *center);
-    void            (*clear)(const Renderer *this);
-    void            (*display)(const Renderer *this);
-    bool            (*canFullyDisplay)(const Renderer *this);
+    void            (*renderCharAt)(const struct Renderer *this, const wchar_t ch, const Color *color, const Vector2i *position);
+    void            (*renderStringAt)(const struct Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position);
+    void            (*clear)(const struct Renderer *this);
+    void            (*display)(const struct Renderer *this);
 
     // Variables
 

@@ -20,17 +20,17 @@ typedef struct PendingTask {
 typedef struct StateStack {
     // Methods
 
-    void        (*handleEvent)(StateStack *this, const int key);
-    void        (*update)(StateStack *this, float deltaTime);
-    void        (*render)(const StateStack *this, const Renderer *renderer);
+    void        (*handleEvent)(struct StateStack *this, const int key);
+    void        (*update)(struct StateStack *this, float deltaTime);
+    void        (*render)(const struct StateStack *this, const Renderer *renderer);
 
-    void        (*pushState)(StateStack *this, StateID id);
-    void        (*popState)(StateStack *this);
-    void        (*clearStates)(StateStack *this);
+    void        (*pushState)(struct StateStack *this, StateID id);
+    void        (*popState)(struct StateStack *this);
+    void        (*clearStates)(struct StateStack *this);
 
-    bool        (*isEmpty)(const StateStack *this);
+    bool        (*isEmpty)(const struct StateStack *this);
 
-    void        (*applyPendingTasks)(StateStack *this);
+    void        (*applyPendingTasks)(struct StateStack *this);
 
     // Variables
 

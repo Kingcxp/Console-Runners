@@ -1,10 +1,14 @@
 #include "Renderer.h"
 
-void Renderer_renderCharAt(const Renderer *this, const wchar_t *ch, const Color *color, const Vector2i *position) {
-    if ((*ch) == L' ' || outOfBounds(this, position->x, position->y)) {
+void setCursor(const int x, const int y) {
+    printf("\033[%d;%dH", y, x + 1);
+}
+
+void Renderer_renderCharAt(const Renderer *this, const wchar_t ch, const Color *color, const Vector2i *position) {
+    if (ch == L' ' || outOfBounds(this, position->x, position->y)) {
         return;
     }
-    this->canvas[position->y][position->x] = *ch;
+    this->canvas[position->y][position->x] = ch;
     this->colors[position->y][position->x] = *color;
 }
 
@@ -16,19 +20,6 @@ void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Col
         }
         this->canvas[position->y][position->x + i] = str[i];
         this->colors[position->y][position->x + i] = colors[i];
-    }
-}
-
-void Renderer_renderRectAt(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *dstRect, const Vector2i *center) {
-    const Vector2i *position = {dstRect->x - center->x, dstRect->y - center->y};
-    for (int i = 0; i < dstRect->h; ++i) {
-        for (int j = 0; j < dstRect->w; ++j) {
-            if (mat[i][j] == L' ' || outOfBounds(this, position->x + j, position->y + i)) {
-                continue;
-            }
-            this->canvas[position->y + i][position->x + j] = mat[i][j];
-            this->colors[position->y + i][position->x + j] = colorMat[i][j];
-        }
     }
 }
 
@@ -49,22 +40,12 @@ void Renderer_display(const Renderer *this) {
             }
             this->lastCanvas[i][j] = this->canvas[i][j];
             this->lastColors[i][j] = this->colors[i][j];
-            if (outOfTermBounds(this->y + i, this->x + j)) {
-                continue;
-            }
             printf(ANSI_Colors[this->colors[i][j]]);
-            bc_putchar((bc_point) {this->y + i, this->x + j}, this->canvas[i][j]);
+            setCursor(this->x + j, this->y + i);
+            putwchar(this->canvas[i][j]);
             printf(ANSI_Colors[Color_Escape]);
         }
     }
-}
-
-bool Renderer_canFullyDisplay(const Renderer *this) {
-    if (outOfTermBounds(this->x, this->y) || 
-        outOfTermBounds(this->x + this->width - 1, this->y + this->height - 1)) {
-        return false;
-    }
-    return true;
 }
 
 Renderer *createRenderer(int x, int y, int w, int h) {
@@ -89,10 +70,8 @@ Renderer *createRenderer(int x, int y, int w, int h) {
     }
     renderer->renderCharAt = Renderer_renderCharAt;
     renderer->renderStringAt = Renderer_renderStringAt;
-    renderer->renderRectAt = Renderer_renderRectAt;
     renderer->clear = Renderer_clear;
     renderer->display = Renderer_display;
-    renderer->canFullyDisplay = Renderer_canFullyDisplay;
 
     return renderer;
 }

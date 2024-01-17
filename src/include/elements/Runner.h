@@ -3,11 +3,6 @@
 
 
 #include "../Globals.h"
-#include "../resources/runners/RunnerList.h"
-#include "../basics/boxchar/boxchar.h"
-
-
-const Vector2f distPerChar = {1.f, 2.f};
 
 typedef enum RunnerStatus {
     Idle,
@@ -22,17 +17,18 @@ typedef enum RunnerKeys {
     Jump,
     Roll,
     KeyCount,
-};
+} RunnerKeys;
 const int runnerKeyValue[] = {75, 77, 72, 80};
 
 typedef struct Runner {
     // Methods
 
-    void                (*handleEvent)(Runner *this, const int key);
-    void                (*update)(Runner *this, float deltaTime);
-    void                (*render)(const Runner *this, const Renderer *renderer);
+    void                (*handleEvent)(struct Runner *this, const int key);
+    void                (*update)(struct Runner *this, float deltaTime);
+    void                (*render)(const struct Runner *this, const Renderer *renderer);
 
-    const CollisionBox  (*getCollisionBox)(const Runner *this);
+    const Rect          (*getCollisionRect)(const struct Runner *this);
+    const char          (*getCollisionChar)(const struct Runner *this, Vector2i position);
 
     // Variables
 
@@ -73,13 +69,10 @@ typedef struct Runner {
                         trackDelta,
                         switchTrackSpeed,
                         runningSpeed,
-                        frameTimer,
-                        trackDistance;
+                        frameTimer;
 
     Vector2f            position;
-
-    Vector2i            center;
-
+    
     RunnerStatus        status;
 } Runner;
 

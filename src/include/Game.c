@@ -2,20 +2,25 @@
 
 void Game_loop(Game *this) {
     clock_t now = clock();
-    while (this->isLooping) {
+    this->stack->pushState(this->stack, GameState);
+
+    while (!this->stack->isEmpty(this->stack)) {
         // Event handling process
-        while (bc_kbhit()) {
-            int ch = bc_getchar();
+        int ch = 0;
+        while (keyboardHit()) {
+            ch = termGetch();
             // Handle event
-            printf("%d\n", ch);
-            if (ch == 'q') {
-                this->isLooping = false;
-            }
+            this->stack->handleEvent(this->stack, ch);
         }
         // Update process
         float deltaTime = (clock() - now) / 1000.f;
+        now = clock();
+        this->stack->update(this->stack, deltaTime);
 
         // Render process
+        this->globals.renderer->clear(this->globals.renderer);
+        this->stack->render(this->stack, this->globals.renderer);
+        this->globals.renderer->display(this->globals.renderer);
     }
 }
 
@@ -23,20 +28,20 @@ Game *createGame() {
     Game *game = (Game *)malloc(sizeof(Game));
     
     // initialize methods
-    bc_init();
+    initConsole();
     srand(time(NULL));
-    setlocale(LC_ALL, "en_US.UTF-8");
     game->loop = Game_loop;
     game->globals.renderer = createRenderer(0, 0, RENDER_WIDTH, RENDER_HEIGHT);
-    game->isLooping = true;
+    game->stack = createStateStack(&game->globals);
 
     return game;
 }
 
 void destroyGame(Game *game) {
     // free game objects
-    bc_end();
+    endConsole();
     setlocale(LC_ALL, "");
+    destroyStateStack(game->stack);
     destroyRenderer(game->globals.renderer);
 
     free(game);

@@ -6,6 +6,7 @@ void StateStack_handleEvent(StateStack *this, const int key) {
             break;
         }
     }
+    this->applyPendingTasks(this);
 }
 
 void StateStack_update(StateStack *this, float deltaTime) {
@@ -14,6 +15,7 @@ void StateStack_update(StateStack *this, float deltaTime) {
             break;
         }
     }
+    this->applyPendingTasks(this);
 }
 
 void StateStack_render(const StateStack *this, const Renderer *renderer) {
@@ -27,6 +29,11 @@ void StateStack_render(const StateStack *this, const Renderer *renderer) {
 }
 
 void StateStack_pushState(StateStack *this, StateID id) {
+    if (this->stackTop == -1) {
+        this->stack[++this->stackTop] = createState(this->globals, this, id);
+        this->idStack[this->stackTop] = id;
+        return;
+    }
     this->pendingBack = (this->pendingBack + 1) % PENDING_MAX_LENGTH;
     this->pendingList[this->pendingBack].action = StackPush;
     this->pendingList[this->pendingBack].stateID = id;

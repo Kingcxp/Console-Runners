@@ -2,7 +2,7 @@
 #define RUNNER_BASICAL
 
 
-#include "../../GameElements/Runner.h"
+#include "../../elements/Runner.h"
 
 const wchar_t BR_runningFrames[4][4][4] = {
     {
@@ -83,7 +83,7 @@ const Color BR_runningColors[4][4][3] = {
     },
 };
 const short BR_runningFrameCount = 4;
-const float BR_runningSeconds[4] = {0.2f, 0.2f, 0.2f, 0.2f};
+const float BR_runningSeconds[4] = {0.1f, 0.1f, 0.1f, 0.1f};
 
 const wchar_t BR_rollingFrames[7][4][4] = {
     {
@@ -218,7 +218,7 @@ const Color BR_rollingColors[7][4][3] = {
     },
 };
 const short BR_rollingFrameCount = 7;
-const float BR_rollingSeconds[7] = {0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f};
+const float BR_rollingSeconds[7] = {0.1f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.1f};
 
 const wchar_t BR_jumpingFrames[1][4][4] = {
     {
@@ -230,6 +230,7 @@ const wchar_t BR_jumpingFrames[1][4][4] = {
 };
 const Color BR_jumpingColors[1][4][3] = {
     {
+        {Color_Escape, Color_Escape, Color_Escape},
         {Color_Yellow, Color_Yellow, Color_Yellow},
         {Color_Escape, Color_Yellow, Color_Escape},
         {Color_Yellow, Color_Escape, Color_Yellow},
@@ -263,9 +264,9 @@ const Color BR_deadColors[1][4][3] = {
 };
 const short BR_deadFrameCount = 1;
 
-const float BR_jumpSpeed = 2.f;
-const float BR_gravity = 2.f;
-const float BR_switchTrackSpeed = 8.f;
-const float BR_runningSpeed = 5.f;
+const float BR_jumpSpeed = 10.f;
+const float BR_gravity = 16.f;
+const float BR_switchTrackSpeed = 16.f;
+const float BR_runningSpeed = 8.f;
 
 #endif // RUNNER_BASICAL

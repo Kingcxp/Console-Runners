@@ -3,19 +3,21 @@
 
 
 #include "Globals.h"
-
-#define RENDER_WIDTH    19
-#define RENDER_HEIGHT   24
+#include "basics/Renderer.c"
+#include "basics/State.c"
+#include "basics/StateStack.c"
+#include "elements/Runner.c"
+#include "states/GameState.c"
 
 typedef struct Game {
     // Methods
 
-    void        (*loop)(Game *this);
+    void        (*loop)(struct Game *this);
 
     // Variables
 
     Globals     globals;
-    bool        isLooping;
+    StateStack  *stack;
 } Game;
 
 Game *createGame();
