@@ -3,7 +3,9 @@
 
 
 #include <wchar.h>
-#include "../Globals.h"
+#include <stdbool.h>
+#include "../basics/CollisionBox.h"
+#include "../basics/boxchar/boxchar.h"
 
 typedef struct Renderer {
     // Methods

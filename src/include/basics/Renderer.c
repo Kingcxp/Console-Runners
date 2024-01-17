@@ -1,75 +1,67 @@
 #include "Renderer.h"
 
-void Renderer_renderCharAt(const Renderer *renderer, const wchar_t *ch, const Color *color, const Vector2i *position) {
-    if ((*ch) == L' ' || outOfBounds(renderer, position->x, position->y)) {
+void Renderer_renderCharAt(const Renderer *this, const wchar_t *ch, const Color *color, const Vector2i *position) {
+    if ((*ch) == L' ' || outOfBounds(this, position->x, position->y)) {
         return;
     }
-    renderer->canvas[position->y][position->x] = *ch;
-    renderer->colors[position->y][position->x] = *color;
+    this->canvas[position->y][position->x] = *ch;
+    this->colors[position->y][position->x] = *color;
 }
 
-void Renderer_renderStringAt(const Renderer *renderer, const wchar_t *str, const Color *color, const Vector2i *position) {
+void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *color, const Vector2i *position) {
     int len = wcslen(str);
-    if (outOfBounds(renderer, position->x, position->y) || 
-        outOfBounds(renderer, position->x + len - 1, position->y)) {
-        return;
-    }
     for (int i = 0; i < len; ++i) {
-        if (str[i] == L' ') {
+        if (str[i] == L' ' || outOfBounds(this, position->x + i, position->y)) {
             continue;
         }
-        renderer->canvas[position->y][position->x + i] = str[i];
-        renderer->colors[position->y][position->x + i] = color[i];
+        this->canvas[position->y][position->x + i] = str[i];
+        this->colors[position->y][position->x + i] = color[i];
     }
 }
 
-void Renderer_renderRectAt(const Renderer *renderer, const wchar_t **mat, const Color **colorMat, const Rect *rect, const Vector2i *center) {
-    if (outOfBounds(renderer, rect->x - center->x, rect->y - center->y) || 
-        outOfBounds(renderer, rect->x - center->x + rect->w - 1, rect->y - center->y + rect->h - 1)) {
-        return;
-    }
+void Renderer_renderRectAt(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *rect, const Vector2i *center) {
     const Vector2i *position = {rect->x - center->x, rect->y - center->y};
     for (int i = 0; i < rect->h; ++i) {
         for (int j = 0; j < rect->w; ++j) {
-            if (mat[i][j] == L' ') {
+            if (mat[i][j] == L' ' || outOfBounds(this, position->x + j, position->y + i)) {
                 continue;
             }
-            renderer->canvas[position->y + i][position->x + j] = mat[i][j];
-            renderer->colors[position->y + i][position->x + j] = colorMat[i][j];
+            this->canvas[position->y + i][position->x + j] = mat[i][j];
+            this->colors[position->y + i][position->x + j] = colorMat[i][j];
         }
     }
 }
 
-void Renderer_clear(const Renderer *renderer) {
-    for (int i = 0; i < renderer->height; ++i) {
-        for (int j = 0; j < renderer->width; ++j) {
-            renderer->canvas[i][j] = L' ';
-            renderer->colors[i][j] = Color_Escape;
+void Renderer_clear(const Renderer *this) {
+    for (int i = 0; i < this->height; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            this->canvas[i][j] = L' ';
+            this->colors[i][j] = Color_Escape;
         }
     }
 }
 
-void Renderer_display(const Renderer *renderer) {
-    for (int i = 0; i < renderer->height; ++i) {
-        for (int j = 0; j < renderer->width; ++j) {
-            if (renderer->canvas[i][j] == renderer->lastCanvas[i][j] && renderer->colors[i][j] == renderer->lastColors[i][j]) {
+void Renderer_display(const Renderer *this) {
+    for (int i = 0; i < this->height; ++i) {
+        for (int j = 0; j < this->width; ++j) {
+            if (this->canvas[i][j] == this->lastCanvas[i][j] && this->colors[i][j] == this->lastColors[i][j]) {
                 continue;
             }
-            renderer->lastCanvas[i][j] = renderer->canvas[i][j];
-            renderer->lastColors[i][j] = renderer->colors[i][j];
-            if (outOfTermBounds(renderer->y + i, renderer->x + j)) {
+            this->lastCanvas[i][j] = this->canvas[i][j];
+            this->lastColors[i][j] = this->colors[i][j];
+            if (outOfTermBounds(this->y + i, this->x + j)) {
                 continue;
             }
-            printf(ANSI_Colors[renderer->colors[i][j]]);
-            bc_putchar((bc_point) {renderer->y + i, renderer->x + j}, renderer->canvas[i][j]);
+            printf(ANSI_Colors[this->colors[i][j]]);
+            bc_putchar((bc_point) {this->y + i, this->x + j}, this->canvas[i][j]);
             printf(ANSI_Colors[Color_Escape]);
         }
     }
 }
 
-bool Renderer_canFullyDisplay(const Renderer *renderer) {
-    if (outOfTermBounds(renderer->x, renderer->y) || 
-        outOfTermBounds(renderer->x + renderer->width - 1, renderer->y + renderer->height - 1)) {
+bool Renderer_canFullyDisplay(const Renderer *this) {
+    if (outOfTermBounds(this->x, this->y) || 
+        outOfTermBounds(this->x + this->width - 1, this->y + this->height - 1)) {
         return false;
     }
     return true;

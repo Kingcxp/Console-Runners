@@ -3,6 +3,7 @@
 
 
 #include "../Globals.h"
+#include "../resources/runners/RunnerList.h"
 #include "../basics/boxchar/boxchar.h"
 
 
@@ -15,44 +16,71 @@ typedef enum RunnerStatus {
     Jumping,
 } RunnerStatus;
 
+typedef enum RunnerKeys {
+    GoLeft,
+    GoRight,
+    Jump,
+    Roll,
+    KeyCount,
+};
+const int runnerKeyValue[] = {75, 77, 72, 80};
+
 typedef struct Runner {
     // Methods
 
+    void                (*handleEvent)(Runner *, const int);
+    void                (*update)(Runner *, float);
+    void                (*render)(const Runner *, const Renderer *);
+
+    const CollisionBox  (*getCollisionBox)(const Runner *);
+
     // Variables
 
-    const wchar_t   (*runningFrames)[4][4],
-                    (*rollingFrames)[4][4],
-                    (*jumpingFrames)[4][4],
-                    (*deadFrames)[4][4];
+    const Globals       *globals;
 
-    const Color     (*runningColors)[4][3],
-                    (*rollingColors)[4][3],
-                    (*jumpingColors)[4][3],
-                    (*deadColors)[4][3];
+    const wchar_t       (*runningFrames)[4][4],
+                        (*rollingFrames)[4][4],
+                        (*jumpingFrames)[4][4],
+                        (*deadFrames)[4][4];
 
-    const char      (*runningCollisionBox)[4][4],
-                    (*rollingCollisionBox)[4][4],
-                    (*jumpingCollisionBox)[4][4];
+    const Color         (*runningColors)[4][3],
+                        (*rollingColors)[4][3],
+                        (*jumpingColors)[4][3],
+                        (*deadColors)[4][3];
 
-    short           runningFrameCount,
-                    rollingFrameCount,
-                    jumpingFrameCount,
-                    deadFrameCount;
+    int                 frame,
+                        targetTrack;
 
-    const float     *runningSeconds,
-                    *rollingSeconds;
+    bool                readyToRoll,
+                        readyToJump;
 
-    float           jumpSpeed,
-                    jumpVelocity,
-                    jumpAcceleration,
-                    jumpDelta;
+    const char          (*runningCollisionBox)[4][4],
+                        (*rollingCollisionBox)[4][4],
+                        (*jumpingCollisionBox)[4][4];
 
-    Vector2f        position;
+    short               runningFrameCount,
+                        rollingFrameCount,
+                        jumpingFrameCount,
+                        deadFrameCount;
 
-    float           switchTrackSpeed,
-                    runningSpeed;
+    const float         *runningSeconds,
+                        *rollingSeconds;
 
-    RunnerStatus    status;
-} Runner;
+    float               jumpSpeed,
+                        jumpVelocity,
+                        gravity,
+                        jumpDelta,
+                        trackDelta,
+                        switchTrackSpeed,
+                        runningSpeed,
+                        frameTimer,
+                        trackDistance;
+
+    Vector2f            position;
+
+    Vector2i            center;
+
+    RunnerStatus        status;
+} Runner;   
 
 #endif // RUNNER_H

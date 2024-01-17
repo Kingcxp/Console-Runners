@@ -1,4 +1,23 @@
-#include "Game.h"
+#ifndef GAME_H
+#define GAME_H
+
+
+#include "Globals.h"
+
+#define RENDER_WIDTH    19
+#define RENDER_HEIGHT   24
+
+typedef struct Game {
+    // Methods
+
+    void        (*loop)(Game *);
+
+    // Variables
+
+    Globals     globals;
+    bool        isLooping;
+} Game;
+
 
 void Game_loop(Game *game) {
     clock_t now = clock();
@@ -27,7 +46,7 @@ Game *createGame() {
     srand(time(NULL));
     setlocale(LC_ALL, "en_US.UTF-8");
     game->loop = Game_loop;
-    game->globals = (Globals *)malloc(sizeof(Globals));
+    game->globals.renderer = createRenderer(0, 0, RENDER_WIDTH, RENDER_HEIGHT);
     game->isLooping = true;
 
     return game;
@@ -37,7 +56,9 @@ void destroyGame(Game *game) {
     // free game objects
     bc_end();
     setlocale(LC_ALL, "");
-    free(game->globals);
+    destroyRenderer(game->globals.renderer);
 
     free(game);
 }
+
+#endif // GAME_H

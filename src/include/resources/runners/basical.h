@@ -228,7 +228,7 @@ const wchar_t BR_jumpingFrames[1][4][4] = {
         L"/ \\",
     }
 };
-const Color BR_jumpingColors[1][4][3] {
+const Color BR_jumpingColors[1][4][3] = {
     {
         {Color_Yellow, Color_Yellow, Color_Yellow},
         {Color_Escape, Color_Yellow, Color_Escape},
@@ -253,7 +253,7 @@ const wchar_t BR_deadFrames[1][4][4] = {
         L"/○\\",
     }
 };
-const Color BR_deadColors[1][4][3] {
+const Color BR_deadColors[1][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
@@ -262,5 +262,10 @@ const Color BR_deadColors[1][4][3] {
     }
 };
 const short BR_deadFrameCount = 1;
+
+const float BR_jumpSpeed = 2.f;
+const float BR_gravity = 2.f;
+const float BR_switchTrackSpeed = 8.f;
+const float BR_runningSpeed = 5.f;
 
 #endif // RUNNER_BASICAL_H
