@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME
+#define GAME
 
 
 #include "Globals.h"
@@ -10,7 +10,7 @@
 typedef struct Game {
     // Methods
 
-    void        (*loop)(Game *);
+    void        (*loop)(Game *this);
 
     // Variables
 
@@ -19,16 +19,16 @@ typedef struct Game {
 } Game;
 
 
-void Game_loop(Game *game) {
+void Game_loop(Game *this) {
     clock_t now = clock();
-    while (game->isLooping) {
+    while (this->isLooping) {
         // Event handling process
         while (bc_kbhit()) {
             int ch = bc_getchar();
             // Handle event
             printf("%d\n", ch);
             if (ch == 'q') {
-                game->isLooping = false;
+                this->isLooping = false;
             }
         }
         // Update process
@@ -61,4 +61,4 @@ void destroyGame(Game *game) {
     free(game);
 }
 
-#endif // GAME_H
+#endif // GAME

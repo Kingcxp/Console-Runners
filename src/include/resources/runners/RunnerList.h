@@ -1,5 +1,5 @@
-#ifndef RUNNER_LIST_H
-#define RUNNER_LIST_H
+#ifndef RUNNER_LIST
+#define RUNNER_LIST
 
 
 #include "../../GameElements/Runner.h"
@@ -41,4 +41,4 @@ void setRunner(Runner *runner, RunnerType type) {
     }
 }
 
-#endif // RUNNER_LIST_H
+#endif // RUNNER_LIST

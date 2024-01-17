@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS_H
-#define DEFINITIONS_H
+#ifndef DEFINITIONS
+#define DEFINITIONS
 
 
 #include <stdbool.h>
@@ -108,4 +108,4 @@ bool FloatRect_contains(const FloatRect *rect, const Vector2f *point) {
     return !(point->x < rect->x || rect->x + rect->w < point->x || point->y < rect->y || rect->y + rect->h < point->y);
 }
 
-#endif // DEFINITIONS_H
+#endif // DEFINITIONS

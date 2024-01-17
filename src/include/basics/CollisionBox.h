@@ -1,5 +1,5 @@
-#ifndef COLLISIONBOX_H
-#define COLLISIONBOX_H
+#ifndef COLLISIONBOX
+#define COLLISIONBOX
 
 
 #include "Definitions.h"
@@ -28,4 +28,4 @@ bool isCollide(const CollisionBox *lhs, const CollisionBox *rhs) {
     return false;
 };
 
-#endif // COLLISIONBOX_H
+#endif // COLLISIONBOX

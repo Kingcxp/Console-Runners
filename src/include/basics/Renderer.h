@@ -1,5 +1,5 @@
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef RENDERER
+#define RENDERER
 
 
 #include <wchar.h>
@@ -10,12 +10,12 @@
 typedef struct Renderer {
     // Methods
 
-    void            (*renderCharAt)(const Renderer *, const wchar_t *, const Color *, const Vector2i *);
-    void            (*renderStringAt)(const Renderer *, const wchar_t *, const Color *, const Vector2i *);
-    void            (*renderRectAt)(const Renderer *, const wchar_t **, const Color **, const Rect *, const Vector2i *);
-    void            (*clear)(const Renderer *);
-    void            (*display)(const Renderer *);
-    bool            (*canFullyDisplay)(const Renderer *);
+    void            (*renderCharAt)(const Renderer *this, const wchar_t *ch, const Color *color, const Vector2i *position);
+    void            (*renderStringAt)(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position);
+    void            (*renderRectAt)(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *dstRect, const Vector2i *center);
+    void            (*clear)(const Renderer *this);
+    void            (*display)(const Renderer *this);
+    bool            (*canFullyDisplay)(const Renderer *this);
 
     // Variables
 
@@ -30,4 +30,7 @@ typedef struct Renderer {
                     x, y;
 } Renderer;
 
-#endif // RENDERER_H
+Renderer *createRenderer(int x, int y, int w, int h);
+void destroyRenderer(Renderer *renderer);
+
+#endif // RENDERER

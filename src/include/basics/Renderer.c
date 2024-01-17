@@ -8,21 +8,21 @@ void Renderer_renderCharAt(const Renderer *this, const wchar_t *ch, const Color 
     this->colors[position->y][position->x] = *color;
 }
 
-void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *color, const Vector2i *position) {
+void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position) {
     int len = wcslen(str);
     for (int i = 0; i < len; ++i) {
         if (str[i] == L' ' || outOfBounds(this, position->x + i, position->y)) {
             continue;
         }
         this->canvas[position->y][position->x + i] = str[i];
-        this->colors[position->y][position->x + i] = color[i];
+        this->colors[position->y][position->x + i] = colors[i];
     }
 }
 
-void Renderer_renderRectAt(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *rect, const Vector2i *center) {
-    const Vector2i *position = {rect->x - center->x, rect->y - center->y};
-    for (int i = 0; i < rect->h; ++i) {
-        for (int j = 0; j < rect->w; ++j) {
+void Renderer_renderRectAt(const Renderer *this, const wchar_t **mat, const Color **colorMat, const Rect *dstRect, const Vector2i *center) {
+    const Vector2i *position = {dstRect->x - center->x, dstRect->y - center->y};
+    for (int i = 0; i < dstRect->h; ++i) {
+        for (int j = 0; j < dstRect->w; ++j) {
             if (mat[i][j] == L' ' || outOfBounds(this, position->x + j, position->y + i)) {
                 continue;
             }

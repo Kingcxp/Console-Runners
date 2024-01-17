@@ -1,5 +1,5 @@
-#ifndef RUNNER_BASICAL_H
-#define RUNNER_BASICAL_H
+#ifndef RUNNER_BASICAL
+#define RUNNER_BASICAL
 
 
 #include "../../GameElements/Runner.h"
@@ -268,4 +268,4 @@ const float BR_gravity = 2.f;
 const float BR_switchTrackSpeed = 8.f;
 const float BR_runningSpeed = 5.f;
 
-#endif // RUNNER_BASICAL_H
+#endif // RUNNER_BASICAL

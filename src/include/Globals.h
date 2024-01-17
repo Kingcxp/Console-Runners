@@ -1,12 +1,12 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef GLOBALS
+#define GLOBALS
 
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include "basics/Renderer.c"
+#include "basics/Renderer.h"
 
 typedef struct Globals {
     Renderer    *renderer;
@@ -24,4 +24,4 @@ int random(int l, int r) {
     return rand() % (r - l + 1) + l;
 }
 
-#endif // GLOBALS_H
+#endif // GLOBALS

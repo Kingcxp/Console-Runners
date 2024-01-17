@@ -1,5 +1,5 @@
-#ifndef RUNNER_H
-#define RUNNER_H
+#ifndef RUNNER
+#define RUNNER
 
 
 #include "../Globals.h"
@@ -28,11 +28,11 @@ const int runnerKeyValue[] = {75, 77, 72, 80};
 typedef struct Runner {
     // Methods
 
-    void                (*handleEvent)(Runner *, const int);
-    void                (*update)(Runner *, float);
-    void                (*render)(const Runner *, const Renderer *);
+    void                (*handleEvent)(Runner *this, const int key);
+    void                (*update)(Runner *this, float deltaTime);
+    void                (*render)(const Runner *this, const Renderer *renderer);
 
-    const CollisionBox  (*getCollisionBox)(const Runner *);
+    const CollisionBox  (*getCollisionBox)(const Runner *this);
 
     // Variables
 
@@ -81,6 +81,9 @@ typedef struct Runner {
     Vector2i            center;
 
     RunnerStatus        status;
-} Runner;   
+} Runner;
 
-#endif // RUNNER_H
+Runner *createRunner();
+void destroyRunner(Runner *runner);
+
+#endif // RUNNER
