@@ -23,21 +23,25 @@ void setObstacle(Obstacle *obstacle, ObstacleType type) {
         obstacle->colors = LB_colors;
         obstacle->collisionBox = LB_collisionBox;
         obstacle->height = LB_height;
+        obstacle->passable = LB_passable;
     } else if (type == Obstacle_HighBarrier) {
         obstacle->frame = HB_frame;
         obstacle->colors = HB_colors;
         obstacle->collisionBox = HB_collisionBox;
         obstacle->height = HB_height;
+        obstacle->passable = HB_passable;
     } else if (type == Obstacle_HollowLowBarrier) {
         obstacle->frame = HLB_frame;
         obstacle->colors = HLB_colors;
         obstacle->collisionBox = HLB_collisionBox;
         obstacle->height = HLB_height;
+        obstacle->passable = HLB_passable;
     } else if (type == Obstacle_HollowHighBarrier) {
         obstacle->frame = HHB_frame;
         obstacle->colors = HHB_colors;
         obstacle->collisionBox = HHB_collisionBox;
         obstacle->height = HHB_height;
+        obstacle->passable = HHB_passable;
     }
 }
 

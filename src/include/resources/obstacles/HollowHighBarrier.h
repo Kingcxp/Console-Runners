@@ -29,5 +29,6 @@ const char HHB_collisionBox[5][6] = {
 };
 
 const short HHB_height = 5;
+const bool HHB_passable = true;
 
 #endif // OBSTACLE_HOLLOWHIGHBARRIER

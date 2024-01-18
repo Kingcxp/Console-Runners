@@ -29,5 +29,6 @@ const char HB_collisionBox[5][6] = {
 };
 
 const short HB_height = 5;
+const bool HB_passable = false;
 
 #endif // OBSTACLE_HIGHBARRIER

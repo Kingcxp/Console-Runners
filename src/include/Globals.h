@@ -24,7 +24,7 @@
 #include "basics/Renderer.h"
 
 #define RENDER_WIDTH    19
-#define RENDER_HEIGHT   24
+#define RENDER_HEIGHT   16
 
 #define ROAD_WIDTH      5
 #define ROAD_LENGTH     RENDER_HEIGHT

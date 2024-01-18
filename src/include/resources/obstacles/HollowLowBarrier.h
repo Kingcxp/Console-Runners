@@ -23,5 +23,6 @@ const char HLB_collisionBox[3][6] = {
 };
 
 const short HLB_height = 3;
+const bool HLB_passable = true;
 
 #endif // OBSTACLE_HOLLOWLOWBARRIER

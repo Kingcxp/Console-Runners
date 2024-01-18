@@ -22,6 +22,7 @@ typedef struct Obstacle {
     const Color     (*colors)[5];
     const char      (*collisionBox)[6];
     short           height;
+    bool            passable;
     Vector2f        position;
 
 } Obstacle;

@@ -250,7 +250,7 @@ const wchar_t BR_deadFrames[1][4][4] = {
     {
         L"   ",
         L"   ",
-        L"   ",
+        L"\\ /",
         L"/○\\",
     }
 };
@@ -258,7 +258,7 @@ const Color BR_deadColors[1][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Escape, Color_Escape},
+        {Color_Yellow, Color_Escape, Color_Yellow},
         {Color_Yellow, Color_Yellow, Color_Yellow},
     }
 };
@@ -266,7 +266,7 @@ const short BR_deadFrameCount = 1;
 
 const float BR_jumpSpeed = 15.f;
 const float BR_gravity = 26.f;
-const float BR_switchTrackSpeed = 16.f;
-const float BR_runningSpeed = 8.f;
+const float BR_switchTrackSpeed = 24.f;
+const float BR_runningSpeed = 10.f;
 
 #endif // RUNNER_BASICAL

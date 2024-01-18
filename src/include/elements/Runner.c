@@ -1,6 +1,10 @@
 #include "../resources/runners/RunnerList.h"
 
 void Runner_handleEvent(Runner *this, const int key) {
+    if (this->isDead) {
+        return;
+    }
+
     // Switching track
     if (key == runnerKeyValue[GoLeft] && this->targetTrack >= 0) {
         this->targetTrack -= 1;
@@ -63,6 +67,9 @@ void Runner_update(Runner *this, float deltaTime) {
             this->frame = 0;
             this->frameTimer = 0.f;
         }
+    }
+    if (this->isDead) {
+        return;
     }
     if (this->status == Rolling) {
         this->frameTimer += deltaTime;

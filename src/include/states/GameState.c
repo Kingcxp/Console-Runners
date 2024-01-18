@@ -6,7 +6,7 @@
 #include "../resources/runners/RunnerList.h"
 #include "../resources/obstacles/ObstacleList.h"
 
-#define SAFETY_TIME 2.f
+#define SAFETY_TIME 1.f
 
 bool GameState_handleEvent(State *this, const int key) {
     Runner *runner = this->slots[3];
@@ -24,17 +24,28 @@ bool GameState_handleEvent(State *this, const int key) {
 bool GameState_update(State *this, float deltaTime) {
     // Spawn obstacles if needed.
     bool satisfy = false;
+    int unpassables = 0;
     for (int i = 0; i < 3; ++i) {
         *(float *)this->slots[i] += deltaTime;
         if (*(float *)this->slots[i] >= SAFETY_TIME) {
             satisfy = true;
         }
     }
+    for (int i = 4; i < STATE_SLOTS; ++i) {
+        if (!this->slots[i]) {
+            continue;
+        }
+        if (!((Obstacle *)this->slots[i])->passable) {
+            ++unpassables;
+        }
+    }
     if (satisfy) {
-        int val = random(0, 50000);
-        ObstacleType type = random(0, Obstacle_Count - 1);
-        if (val <= 1)  {
-            Obstacle *obstacle = createObstacle(type);
+        if (random(0, 500000) <= 1)  {
+            Obstacle *obstacle = createObstacle(random(0, Obstacle_Count - 1));
+            while (unpassables >= 2 && !obstacle->passable) {
+                destroyObstacle(obstacle);
+                obstacle = createObstacle(random(0, Obstacle_Count - 1));
+            }
             for (int i = 0; i < 3; ++i) {
                 if (*(float *)this->slots[i] < SAFETY_TIME) {
                     continue;
@@ -44,10 +55,14 @@ bool GameState_update(State *this, float deltaTime) {
                 for (int j = 4; j < STATE_SLOTS; ++j) {
                     if (!this->slots[j]) {
                         this->slots[j] = obstacle;
+                        obstacle = NULL;
                         break;
                     }
                 }
                 break;
+            }
+            if (obstacle) {
+                destroyObstacle(obstacle);
             }
         }
     }
@@ -55,14 +70,41 @@ bool GameState_update(State *this, float deltaTime) {
     Runner *runner = this->slots[3];
     runner->update(runner, deltaTime);
 
+    Rect runnerRect = runner->getCollisionRect(runner);
+    bool collision = false;
     for (int i = 4; i < STATE_SLOTS; ++i) {
         if (this->slots[i]) {
             ((Obstacle *)this->slots[i])->update(this->slots[i], deltaTime, runner->runningSpeed);
+            Rect obstacleRect = ((Obstacle *)this->slots[i])->getCollisionRect(this->slots[i]);
+            if (floor(((Obstacle *)this->slots[i])->position.y) == ROAD_LENGTH - 1 && Rect_intersects(&runnerRect, &obstacleRect)) {
+                for (int row = 0; row < 4; ++row) {
+                    for (int col = 0; col < 3; ++col) {
+                        Vector2i charPos = {runnerRect.x + col, runnerRect.y + row};
+                        char runnerCollision = runner->getCollisionChar(runner, (Vector2i) {col, row});
+                        if (runnerCollision == ' ' || !Rect_contains(&obstacleRect, &charPos)) {
+                            continue;
+                        }
+                        char obstacleCollision = ((Obstacle *)this->slots[i])->getCollisionChar(this->slots[i], (Vector2i) {charPos.x - obstacleRect.x, charPos.y - obstacleRect.y});
+                        if (obstacleCollision != ' ') {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (collision) {
+                        break;
+                    }
+                }
+            }
             if (((Obstacle *)this->slots[i])->position.y >= ROAD_LENGTH) {
                 destroyObstacle(this->slots[i]);
                 this->slots[i] = NULL;
             }
         }
+    }
+
+    // handle collision with obstacles
+    if (collision) {
+        runner->die(runner);
     }
 
     return false;

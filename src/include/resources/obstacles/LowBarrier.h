@@ -23,5 +23,6 @@ const char LB_collisionBox[3][6] = {
 };
 
 const short LB_height = 3;
+const bool LB_passable = true;
 
 #endif // OBSTACLE_LOWBARRIER
