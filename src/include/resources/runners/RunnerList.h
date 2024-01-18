@@ -6,12 +6,13 @@
 #include "basical.h"
 
 typedef enum RunnerType {
-    Basical,
+    Runner_Basical,
+    Runner_Count,
     // TODO: Register more runners.
 } RunnerType;
 
 void setRunner(Runner *runner, RunnerType type) {
-    if (type == Basical) {
+    if (type == Runner_Basical) {
         runner->runningFrames = BR_runningFrames;
         runner->runningColors = BR_runningColors;
         runner->runningCollisionBox = BR_runningCollisionBox;

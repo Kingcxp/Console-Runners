@@ -4,7 +4,7 @@
 
 #include "../Globals.h"
 
-#define STATE_SLOTS 8
+#define STATE_SLOTS 16
 
 typedef struct StateStack StateStack;
 

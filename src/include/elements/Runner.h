@@ -20,6 +20,8 @@ typedef enum RunnerKeys {
 } RunnerKeys;
 const int runnerKeyValue[] = {75, 77, 72, 80};
 
+typedef enum RunnerType RunnerType;
+
 typedef struct Runner {
     // Methods
 
@@ -27,8 +29,10 @@ typedef struct Runner {
     void                (*update)(struct Runner *this, float deltaTime);
     void                (*render)(const struct Runner *this, const Renderer *renderer);
 
+    void                (*die)(struct Runner *this);
+
     const Rect          (*getCollisionRect)(const struct Runner *this);
-    const char          (*getCollisionChar)(const struct Runner *this, Vector2i position);
+    const char          (*getCollisionChar)(const struct Runner *this, const Vector2i position);
 
     // Variables
 
@@ -48,7 +52,8 @@ typedef struct Runner {
                         targetTrack;
 
     bool                readyToRoll,
-                        readyToJump;
+                        readyToJump,
+                        isDead;
 
     const char          (*runningCollisionBox)[4][4],
                         (*rollingCollisionBox)[4][4],
@@ -76,7 +81,7 @@ typedef struct Runner {
     RunnerStatus        status;
 } Runner;
 
-Runner *createRunner();
+Runner *createRunner(RunnerType type);
 void destroyRunner(Runner *runner);
 
 #endif // RUNNER

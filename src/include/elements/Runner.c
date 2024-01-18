@@ -1,4 +1,3 @@
-#include "Runner.h"
 #include "../resources/runners/RunnerList.h"
 
 void Runner_handleEvent(Runner *this, const int key) {
@@ -97,6 +96,11 @@ void Runner_render(const Runner *this, const Renderer *renderer) {
     Vector2i position;
     position.x = floor(this->position.x + this->trackDelta) - 1, position.y = floor(this->position.y + this->jumpDelta) - 3;
     for (int i = 0; i < 4; ++i) {
+        if (this->isDead) {
+            renderer->renderStringAt(renderer, this->deadFrames[this->frame][i], this->deadColors[this->frame][i], &position);
+            ++position.y;
+            continue;
+        }
         switch (this->status) {
             case Idle:
                 renderer->renderStringAt(renderer, this->runningFrames[0][i], this->runningColors[0][i], &position);
@@ -117,14 +121,19 @@ void Runner_render(const Runner *this, const Renderer *renderer) {
     }
 }
 
+void Runner_die(Runner *this) {
+    this->isDead = true;
+    this->frame = random(0, this->deadFrameCount - 1);
+}
+
 const Rect Runner_getCollisionRect(const Runner *this) {
     Rect rect;
-    rect.x = floor(this->position.x + this->trackDelta), rect.y = floor(this->position.y + this->jumpDelta);
+    rect.x = floor(this->position.x + this->trackDelta) - 1, rect.y = floor(this->position.y + this->jumpDelta) - 3;
     rect.w = 3, rect.h = 4;
     return rect;
 }
 
-const char Runner_getCollisionChar(const Runner *this, Vector2i position) {
+const char Runner_getCollisionChar(const Runner *this, const Vector2i position) {
     switch (this->status) {
         case Idle:
             return this->runningCollisionBox[0][position.y][position.x];
@@ -144,10 +153,9 @@ const char Runner_getCollisionChar(const Runner *this, Vector2i position) {
     return ' ';
 }
 
-Runner *createRunner() {
+Runner *createRunner(RunnerType type) {
     Runner *runner = (Runner *)malloc(sizeof(Runner));
 
-    setRunner(runner, Basical);
     runner->jumpDelta = 0.f;
     runner->jumpVelocity = 0.f;
     runner->status = Idle;
@@ -156,13 +164,16 @@ Runner *createRunner() {
     runner->targetTrack = 0;
     runner->trackDelta = 0.f;
 
-    runner->readyToJump = runner->readyToRoll = false;
+    runner->readyToJump = runner->readyToRoll = runner->isDead = false;
     
     runner->handleEvent = Runner_handleEvent;
     runner->update = Runner_update;
     runner->render = Runner_render;
+    runner->die = Runner_die;
     runner->getCollisionRect = Runner_getCollisionRect;
     runner->getCollisionChar = Runner_getCollisionChar;
+
+    setRunner(runner, type);
 
     return runner;
 }

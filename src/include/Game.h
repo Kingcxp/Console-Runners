@@ -7,6 +7,7 @@
 #include "basics/State.c"
 #include "basics/StateStack.c"
 #include "elements/Runner.c"
+#include "elements/Obstacle.c"
 #include "states/GameState.c"
 
 typedef struct Game {
