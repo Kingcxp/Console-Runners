@@ -54,7 +54,7 @@ void Runner_update(Runner *this, float deltaTime) {
     // Managing states
     if (this->status == Jumping) {
         this->jumpDelta -= this->jumpVelocity * deltaTime;
-        this->jumpVelocity -= this->gravity * deltaTime;
+        this->jumpVelocity -= this->gravity * deltaTime * (this->readyToRoll ? 4.f : 1.f);
         if (this->jumpDelta > 0.f) {
             this->jumpDelta = 0.f;
             this->jumpVelocity = 0.f;
@@ -76,15 +76,16 @@ void Runner_update(Runner *this, float deltaTime) {
         while (this->frameTimer >= this->rollingSeconds[this->frame]) {
             this->frameTimer -= this->rollingSeconds[this->frame];
             this->frame = this->frame + 1;
+            if (this->readyToJump) {
+                this->readyToJump = false;
+                this->jumpVelocity = this->jumpSpeed;
+                this->status = Jumping;
+                this->frame = random(0, this->jumpingFrameCount - 1);
+                this->frame = 0;
+                this->frameTimer = 0.f;
+            }
             if (this->frame >= this->rollingFrameCount) {
-                if (this->readyToJump) {
-                    this->readyToJump = false;
-                    this->jumpVelocity = this->jumpSpeed;
-                    this->status = Jumping;
-                    this->frame = random(0, this->jumpingFrameCount - 1);
-                } else {
-                    this->status = Running;
-                }
+                this->status = Running;
                 this->frame = 0;
                 this->frameTimer = 0.f;
             }

@@ -17,6 +17,8 @@ void setPickUp(PickUp *pickup, PickUpType type) {
         pickup->colors = Coin_colors;
         pickup->collisionBox = Coin_collisionBox;
         pickup->height = Coin_height;
+        pickup->spawnChance = pickup->spawnChanceTotal = 0;
+        pickup->takeEffect = Coin_takeEffect;
     }
 }
 

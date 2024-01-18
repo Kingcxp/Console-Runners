@@ -2,6 +2,8 @@
 
 ScoreBoard *createScoreBoard() {
     ScoreBoard *scoreBoard = (ScoreBoard *)malloc(sizeof(ScoreBoard));
+    
+    scoreBoard->coins = 0;
 
     return scoreBoard;
 }

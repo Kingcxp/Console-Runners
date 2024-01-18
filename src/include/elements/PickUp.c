@@ -38,8 +38,10 @@ bool PickUp_collideRunner(const PickUp *this, const Runner *runner) {
     return false;
 }
 
-PickUp *createPickUp(const PickUpType type) {
+PickUp *createPickUp(const PickUpType type, const Globals *globals) {
     PickUp *pickup = (PickUp *)malloc(sizeof(PickUp));
+
+    pickup->globals = globals;
 
     pickup->handleEvent = PickUp_handleEvent;
     pickup->update = PickUp_update;

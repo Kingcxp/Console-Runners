@@ -24,7 +24,7 @@
 #include "basics/Renderer.h"
 #include "ScoreBoard.h"
 
-#define RENDER_WIDTH    19
+#define RENDER_WIDTH    20
 #define RENDER_HEIGHT   16
 
 #define ROAD_WIDTH      5
@@ -38,7 +38,7 @@ typedef struct Globals {
 #define outOfBounds(renderer, x, y) ((x) < 0 || (x) >= renderer->width || (y) < 0 || (y) >= renderer->height)
 
 int random(int l, int r) {
-    return rand() % (r - l + 1) + l;
+    return rand() * rand() % (r - l + 1) + l;
 }
 
 int keyboardHit() {
