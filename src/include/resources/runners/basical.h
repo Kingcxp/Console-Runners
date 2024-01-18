@@ -264,8 +264,8 @@ const Color BR_deadColors[1][4][3] = {
 };
 const short BR_deadFrameCount = 1;
 
-const float BR_jumpSpeed = 10.f;
-const float BR_gravity = 16.f;
+const float BR_jumpSpeed = 15.f;
+const float BR_gravity = 26.f;
 const float BR_switchTrackSpeed = 16.f;
 const float BR_runningSpeed = 8.f;
 
