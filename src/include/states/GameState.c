@@ -63,7 +63,7 @@ bool GameState_update(State *this, float deltaTime) {
                 obstacle = createObstacle(random(0, Obstacle_Count - 1));
             }
             *(float *)this->slots[i] = 0.f;
-            obstacle->position = (Vector2f) {1.f + (float)ROAD_WIDTH * 0.5f + i * (1.f + ROAD_WIDTH) + GAME_OFFSETX, GAME_OFFSETY};
+            obstacle->position = (Vector2f){1.f + (float)ROAD_WIDTH * 0.5f + i * (1.f + ROAD_WIDTH) + GAME_OFFSETX, GAME_OFFSETY};
             for (int j = 7; j * 2 < STATE_SLOTS; ++j) {
                 if (!this->slots[j]) {
                     this->slots[j] = obstacle;
@@ -95,7 +95,7 @@ bool GameState_update(State *this, float deltaTime) {
         if (!pickup) {
             pickup = createPickUp(PickUp_Coin, this->globals);
         }
-        pickup->position = (Vector2f) {1.f + (float)ROAD_WIDTH * 0.5f + i * (1.f + ROAD_WIDTH) + GAME_OFFSETX, GAME_OFFSETY};
+        pickup->position = (Vector2f){1.f + (float)ROAD_WIDTH * 0.5f + i * (1.f + ROAD_WIDTH) + GAME_OFFSETX, GAME_OFFSETY};
         for (int j = STATE_SLOTS / 2; j < STATE_SLOTS; ++j) {
             if (!this->slots[j]) {
                 this->slots[j] = pickup;
@@ -192,7 +192,7 @@ State *createGameState(Globals *globals, StateStack *stack) {
     
     Runner *runner = createRunner(Runner_Basical);
     runner->status = Running;
-    runner->position = (Vector2f) {2.f + (float)ROAD_WIDTH * 1.5f + GAME_OFFSETX, (float)ROAD_LENGTH - 0.5f + GAME_OFFSETY};
+    runner->position = (Vector2f){2.f + (float)ROAD_WIDTH * 1.5f + GAME_OFFSETX, (float)ROAD_LENGTH - 0.5f + GAME_OFFSETY};
     state->slots[6] = runner;
 
     for (int i = 0; i < 3; ++i) {

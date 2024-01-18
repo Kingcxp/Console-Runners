@@ -171,6 +171,7 @@ Runner *createRunner(const RunnerType type) {
     runner->frameTimer = 0.f;
     runner->targetTrack = 0;
     runner->trackDelta = 0.f;
+    runner->position = (Vector2f){0.f, 0.f};
 
     runner->readyToJump = runner->readyToRoll = runner->isDead = false;
     

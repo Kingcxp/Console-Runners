@@ -46,6 +46,8 @@ Obstacle *createObstacle(const ObstacleType type) {
     obstacle->render = Obstacle_render;
     obstacle->collideRunner = Obstacle_collideRunner;
 
+    obstacle->position = (Vector2f){0.f, 0.f};
+
     setObstacle(obstacle, type);
 
     return obstacle;

@@ -42,6 +42,7 @@ PickUp *createPickUp(const PickUpType type, const Globals *globals) {
     PickUp *pickup = (PickUp *)malloc(sizeof(PickUp));
 
     pickup->globals = globals;
+    pickup->position = (Vector2f){0.f, 0.f};
 
     pickup->handleEvent = PickUp_handleEvent;
     pickup->update = PickUp_update;
