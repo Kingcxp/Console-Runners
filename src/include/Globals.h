@@ -25,10 +25,10 @@
 #include "ScoreBoard.h"
 
 #define RENDER_WIDTH    20
-#define RENDER_HEIGHT   16
+#define RENDER_HEIGHT   24
 
 #define ROAD_WIDTH      5
-#define ROAD_LENGTH     RENDER_HEIGHT
+#define ROAD_LENGTH     16
 
 typedef struct Globals {
     Renderer    *renderer;

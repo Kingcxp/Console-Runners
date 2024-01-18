@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 void setCursor(const int x, const int y) {
-    printf("\033[%d;%dH", y, x + 1);
+    printf("\033[%d;%dH", y + 1, x + 1);
 }
 
 void Renderer_renderCharAt(const Renderer *this, const wchar_t ch, const Color *color, const Vector2i *position) {

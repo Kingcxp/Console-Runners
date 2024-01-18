@@ -10,7 +10,7 @@
 #define SAFETY_TIME 1.2f
 #define PICKUP_INTERVAL 0.4f
 #define GAME_OFFSETX 1
-#define GAME_OFFSETY 0
+#define GAME_OFFSETY 1
 
 bool GameState_handleEvent(State *this, const int key) {
     Runner *runner = this->slots[6];
