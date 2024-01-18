@@ -2,6 +2,7 @@
 #define OBSTACLE
 
 
+#include "Runner.h"
 #include "../Globals.h"
 
 typedef enum ObstacleType ObstacleType;
@@ -13,8 +14,7 @@ typedef struct Obstacle {
     void            (*update)(struct Obstacle *this, float deltaTime, float speed);
     void            (*render)(const struct Obstacle *this, const Renderer *renderer);
 
-    const Rect      (*getCollisionRect)(const struct Obstacle *this);
-    const char      (*getCollisionChar)(const struct Obstacle *this, const Vector2i position);
+    bool            (*collideRunner)(const struct Obstacle *this, const Runner *runner);
 
     // Variables
 
@@ -27,7 +27,7 @@ typedef struct Obstacle {
 
 } Obstacle;
 
-Obstacle *createObstacle(ObstacleType type);
+Obstacle *createObstacle(const ObstacleType type);
 void destroyObstacle(Obstacle *obstacle);
 
 #endif // OBSTACLE

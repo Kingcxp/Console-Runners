@@ -59,27 +59,27 @@ const char BR_runningCollisionBox[4][4][4] = {
 const Color BR_runningColors[4][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
 };
 const short BR_runningFrameCount = 4;
@@ -176,45 +176,45 @@ const char BR_rollingCollisionBox[7][4][4] = {
 const Color BR_rollingColors[7][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     },
 };
 const short BR_rollingFrameCount = 7;
@@ -231,9 +231,9 @@ const wchar_t BR_jumpingFrames[1][4][4] = {
 const Color BR_jumpingColors[1][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
-        {Color_Escape, Color_Yellow, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
+        {Color_Escape, Color_Cyan, Color_Escape},
+        {Color_Cyan, Color_Escape, Color_Cyan},
     }
 };
 const char BR_jumpingCollisionBox[1][4][4] = {
@@ -258,8 +258,8 @@ const Color BR_deadColors[1][4][3] = {
     {
         {Color_Escape, Color_Escape, Color_Escape},
         {Color_Escape, Color_Escape, Color_Escape},
-        {Color_Yellow, Color_Escape, Color_Yellow},
-        {Color_Yellow, Color_Yellow, Color_Yellow},
+        {Color_Cyan, Color_Escape, Color_Cyan},
+        {Color_Cyan, Color_Cyan, Color_Cyan},
     }
 };
 const short BR_deadFrameCount = 1;

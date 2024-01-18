@@ -70,30 +70,12 @@ bool GameState_update(State *this, float deltaTime) {
     Runner *runner = this->slots[3];
     runner->update(runner, deltaTime);
 
-    Rect runnerRect = runner->getCollisionRect(runner);
     bool collision = false;
     for (int i = 4; i < STATE_SLOTS; ++i) {
         if (this->slots[i]) {
             ((Obstacle *)this->slots[i])->update(this->slots[i], deltaTime, runner->runningSpeed);
-            Rect obstacleRect = ((Obstacle *)this->slots[i])->getCollisionRect(this->slots[i]);
-            if (floor(((Obstacle *)this->slots[i])->position.y) == ROAD_LENGTH - 1 && Rect_intersects(&runnerRect, &obstacleRect)) {
-                for (int row = 0; row < 4; ++row) {
-                    for (int col = 0; col < 3; ++col) {
-                        Vector2i charPos = {runnerRect.x + col, runnerRect.y + row};
-                        char runnerCollision = runner->getCollisionChar(runner, (Vector2i) {col, row});
-                        if (runnerCollision == ' ' || !Rect_contains(&obstacleRect, &charPos)) {
-                            continue;
-                        }
-                        char obstacleCollision = ((Obstacle *)this->slots[i])->getCollisionChar(this->slots[i], (Vector2i) {charPos.x - obstacleRect.x, charPos.y - obstacleRect.y});
-                        if (obstacleCollision != ' ') {
-                            collision = true;
-                            break;
-                        }
-                    }
-                    if (collision) {
-                        break;
-                    }
-                }
+            if (floor(((Obstacle *)this->slots[i])->position.y) == ROAD_LENGTH - 1 && ((Obstacle *)this->slots[i])->collideRunner(this->slots[i], runner)) {
+                collision = true;
             }
             if (((Obstacle *)this->slots[i])->position.y >= ROAD_LENGTH) {
                 destroyObstacle(this->slots[i]);

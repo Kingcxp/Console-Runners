@@ -22,6 +22,7 @@
 #endif
 
 #include "basics/Renderer.h"
+#include "ScoreBoard.h"
 
 #define RENDER_WIDTH    19
 #define RENDER_HEIGHT   16
@@ -31,6 +32,7 @@
 
 typedef struct Globals {
     Renderer    *renderer;
+    ScoreBoard  *scoreBoard;
 } Globals;
 
 #define outOfBounds(renderer, x, y) ((x) < 0 || (x) >= renderer->width || (y) < 0 || (y) >= renderer->height)

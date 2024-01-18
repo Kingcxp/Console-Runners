@@ -32,6 +32,7 @@ Game *createGame() {
     srand(time(NULL));
     game->loop = Game_loop;
     game->globals.renderer = createRenderer(0, 0, RENDER_WIDTH, RENDER_HEIGHT);
+    game->globals.scoreBoard = createScoreBoard();
     game->stack = createStateStack(&game->globals);
 
     return game;
@@ -43,6 +44,7 @@ void destroyGame(Game *game) {
     setlocale(LC_ALL, "");
     destroyStateStack(game->stack);
     destroyRenderer(game->globals.renderer);
+    destroyScoreBoard(game->globals.scoreBoard);
 
     free(game);
 }

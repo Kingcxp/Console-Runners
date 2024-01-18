@@ -15,25 +15,36 @@ void Obstacle_render(const Obstacle *this, const Renderer *renderer) {
     }
 }
 
-const Rect Obstacle_getCollisionRect(const Obstacle *this) {
-    Rect rect;
-    rect.x = floor(this->position.x) - 2, rect.y = floor(this->position.y) - this->height + 1;
-    rect.w = 5, rect.h = this->height;
-    return rect;
+bool Obstacle_collideRunner(const Obstacle *this, const Runner *runner) {
+    Rect runnerRect = runner->getCollisionRect(runner), obstacleRect;
+    obstacleRect.x = floor(this->position.x) - 2, obstacleRect.y = floor(this->position.y) - this->height + 1;
+    obstacleRect.w = 5, obstacleRect.h = this->height;
+    if (!Rect_intersects(&runnerRect, &obstacleRect)) {
+        return false;
+    }
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 3; ++col) {
+            Vector2i charPos = {runnerRect.x + col, runnerRect.y + row};
+            char runnerCollision = runner->getCollisionChar(runner, (Vector2i) {col, row});
+            if (runnerCollision == ' ' || !Rect_contains(&obstacleRect, &charPos)) {
+                continue;
+            }
+            char obstacleCollision = this->collisionBox[charPos.y - obstacleRect.y][charPos.x - obstacleRect.x];
+            if (obstacleCollision != ' ') {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
-const char Obstacle_getCollisionChar(const Obstacle *this, const Vector2i position) {
-    return this->collisionBox[position.y][position.x];
-}
-
-Obstacle *createObstacle(ObstacleType type) {
+Obstacle *createObstacle(const ObstacleType type) {
     Obstacle *obstacle = (Obstacle *)malloc(sizeof(Obstacle));
 
     obstacle->handleEvent = Obstacle_handleEvent;
     obstacle->update = Obstacle_update;
     obstacle->render = Obstacle_render;
-    obstacle->getCollisionRect = Obstacle_getCollisionRect;
-    obstacle->getCollisionChar = Obstacle_getCollisionChar;
+    obstacle->collideRunner = Obstacle_collideRunner;
 
     setObstacle(obstacle, type);
 

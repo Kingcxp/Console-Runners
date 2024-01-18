@@ -81,7 +81,7 @@ typedef struct Runner {
     RunnerStatus        status;
 } Runner;
 
-Runner *createRunner(RunnerType type);
+Runner *createRunner(const RunnerType type);
 void destroyRunner(Runner *runner);
 
 #endif // RUNNER

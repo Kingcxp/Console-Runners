@@ -160,7 +160,7 @@ const char Runner_getCollisionChar(const Runner *this, const Vector2i position) 
     return ' ';
 }
 
-Runner *createRunner(RunnerType type) {
+Runner *createRunner(const RunnerType type) {
     Runner *runner = (Runner *)malloc(sizeof(Runner));
 
     runner->jumpDelta = 0.f;
