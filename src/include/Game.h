@@ -11,6 +11,9 @@
 #include "elements/Obstacle.c"
 #include "elements/PickUp.c"
 #include "states/GameState.c"
+#include "states/PauseState.c"
+#include "GUI/ButtonGroup.c"
+#include "GUI/ProgressBar.c"
 
 typedef struct Game {
     // Methods

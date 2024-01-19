@@ -15,9 +15,8 @@
 
 bool GameState_handleEvent(State *this, const int key) {
     if (key == 32) {
-        // TODO: Pause the game
-        // this->stack->pushState(this->stack, PauseState);
-        // return false;
+        this->stack->pushState(this->stack, PauseState);
+        return false;
     } else if (key == 27) {
         this->stack->popState(this->stack);
         return false;
@@ -212,7 +211,7 @@ void GameState_render(const State *this, const Renderer *renderer) {
     wsprintfW(scoreString, L"Score: %06d", (int)floor(this->globals->scoreBoard->score));
     position.x = GAME_OFFSETX;
     position.y = GAME_OFFSETY - 1;
-    renderer->renderStringAt(renderer, scoreString, NULL, &position);
+    renderer->renderStringAt(renderer, scoreString, NULL, &position, true);
 }
 
 State *createGameState(Globals *globals, StateStack *stack) {

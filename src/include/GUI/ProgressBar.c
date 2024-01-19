@@ -20,27 +20,27 @@ void ProgressBar_update(ProgressBar *this, float deltaTime) {
 void ProgressBar_render(const ProgressBar *this, const Renderer *renderer) {
     // render border
     Vector2i position = this->position;
-    renderer->renderCharAt(renderer, L'╔', this->color, &position);
+    renderer->renderCharAt(renderer, L'╔', &this->color, &position);
     position.x = this->position.x + this->size.x - 1;
-    renderer->renderCharAt(renderer, L'╗', this->color, &position);
+    renderer->renderCharAt(renderer, L'╗', &this->color, &position);
     position.y = this->position.y + this->size.y - 1;
-    renderer->renderCharAt(renderer, L'╝', this->color, &position);
+    renderer->renderCharAt(renderer, L'╝', &this->color, &position);
     position.x = this->position.x;
-    renderer->renderCharAt(renderer, L'╚', this->color, &position);
+    renderer->renderCharAt(renderer, L'╚', &this->color, &position);
     position = this->position;
     for (int i = 0; i < this->size.y - 2; ++i) {
         position.y += 1;
-        renderer->renderCharAt(renderer, L'║', this->color, &position);
+        renderer->renderCharAt(renderer, L'║', &this->color, &position);
         position.x = this->position.x + this->size.x - 1;
-        renderer->renderCharAt(renderer, L'║', this->color, &position);
+        renderer->renderCharAt(renderer, L'║', &this->color, &position);
         position.x = this->position.x;
     }
     position = this->position;
     for (int i = 0; i < this->size.x - 2; ++i) {
         position.x += 1;
-        renderer->renderCharAt(renderer, L'═', this->color, &position);
+        renderer->renderCharAt(renderer, L'═', &this->color, &position);
         position.y = this->position.y + this->size.y - 1;
-        renderer->renderCharAt(renderer, L'═', this->color, &position);
+        renderer->renderCharAt(renderer, L'═', &this->color, &position);
         position.y = this->position.y;
     }
 
@@ -51,23 +51,23 @@ void ProgressBar_render(const ProgressBar *this, const Renderer *renderer) {
     if (this->target <= this->progress) {
         for (int i = 0; i < this->size.y - 2; ++i) {
             for (int j = 0; j < targetAt; ++j) {
-                renderer->renderCharAt(renderer, L'█', this->color, &position);
+                renderer->renderCharAt(renderer, L'█', &this->color, &position);
                 position.x += 1;
             }
             for (int j = targetAt; j < progressAt; ++j) {
-                renderer->renderCharAt(renderer, L'▓', this->color, &position);
+                renderer->renderCharAt(renderer, L'▓', &this->color, &position);
                 position.x += 1;
             }
             if (progressAt == targetAt) {
-                renderer->renderCharAt(renderer, L'▓', this->color, &position);
+                renderer->renderCharAt(renderer, L'▓', &this->color, &position);
                 position.x += 1;
             }
             if (position.x < this->position.x + this->size.x - 1) {
-                renderer->renderCharAt(renderer, L'▒', this->color, &position);
+                renderer->renderCharAt(renderer, L'▒', &this->color, &position);
                 position.x += 1;
             }
             if (position.x < this->position.x + this->size.x - 1) {
-                renderer->renderCharAt(renderer, L'░', this->color, &position);
+                renderer->renderCharAt(renderer, L'░', &this->color, &position);
                 position.x += 1;
             }
             position.y += 1;

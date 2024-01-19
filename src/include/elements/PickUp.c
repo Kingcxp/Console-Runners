@@ -10,7 +10,7 @@ void PickUp_render(const PickUp *this, const Renderer *renderer) {
     Vector2i position;
     position.x = floor(this->position.x) - 2, position.y = floor(this->position.y) - this->height + 1;
     for (int i = 0; i < this->height; ++i) {
-        renderer->renderStringAt(renderer, this->frame[i], this->colors[i], &position);
+        renderer->renderStringAt(renderer, this->frame[i], this->colors[i], &position, false);
         ++position.y;
     }
 }

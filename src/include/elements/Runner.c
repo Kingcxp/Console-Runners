@@ -105,22 +105,22 @@ void Runner_render(const Runner *this, const Renderer *renderer) {
     position.x = floor(this->position.x + this->trackDelta) - 1, position.y = floor(this->position.y + this->jumpDelta) - 3;
     for (int i = 0; i < 4; ++i) {
         if (this->isDead) {
-            renderer->renderStringAt(renderer, this->deadFrames[this->frame][i], this->deadColors[this->frame][i], &position);
+            renderer->renderStringAt(renderer, this->deadFrames[this->frame][i], this->deadColors[this->frame][i], &position, false);
             ++position.y;
             continue;
         }
         switch (this->status) {
             case Idle:
-                renderer->renderStringAt(renderer, this->runningFrames[0][i], this->runningColors[0][i], &position);
+                renderer->renderStringAt(renderer, this->runningFrames[0][i], this->runningColors[0][i], &position, false);
                 break;
             case Running:
-                renderer->renderStringAt(renderer, this->runningFrames[this->frame][i], this->runningColors[this->frame][i], &position);
+                renderer->renderStringAt(renderer, this->runningFrames[this->frame][i], this->runningColors[this->frame][i], &position, false);
                 break;
             case Rolling:
-                renderer->renderStringAt(renderer, this->rollingFrames[this->frame][i], this->rollingColors[this->frame][i], &position);
+                renderer->renderStringAt(renderer, this->rollingFrames[this->frame][i], this->rollingColors[this->frame][i], &position, false);
                 break;
             case Jumping:
-                renderer->renderStringAt(renderer, this->jumpingFrames[this->frame][i], this->jumpingColors[this->frame][i], &position);
+                renderer->renderStringAt(renderer, this->jumpingFrames[this->frame][i], this->jumpingColors[this->frame][i], &position, false);
                 break;
             default:
                 break;

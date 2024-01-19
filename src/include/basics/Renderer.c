@@ -5,21 +5,30 @@ void setCursor(const int x, const int y) {
 }
 
 void Renderer_renderCharAt(const Renderer *this, const wchar_t ch, const Color *color, const Vector2i *position) {
-    if (ch == L' ' || outOfBounds(this, position->x, position->y)) {
+    if ((ch == L' ' && (color == NULL || *color == Color_Escape)) || outOfBounds(this, position->x, position->y)) {
         return;
     }
     this->canvas[position->y][position->x] = ch;
     this->colors[position->y][position->x] = color ? *color : Color_Escape;
 }
 
-void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position) {
+void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position, const bool pure) {
     int len = wcslen(str);
     for (int i = 0; i < len; ++i) {
-        if (str[i] == L' ' || outOfBounds(this, position->x + i, position->y)) {
+        if (outOfBounds(this, position->x + i, position->y)) {
+            continue;
+        }
+        Color color;
+        if (pure) {
+            color = colors ? *colors : Color_Escape;
+        } else {
+            color = colors ? colors[i] : Color_Escape;
+        }
+        if (str[i] == L' ' && color == Color_Escape) {
             continue;
         }
         this->canvas[position->y][position->x + i] = str[i];
-        this->colors[position->y][position->x + i] = colors ? colors[i] : Color_Escape;
+        this->colors[position->y][position->x + i] = color;
     }
 }
 

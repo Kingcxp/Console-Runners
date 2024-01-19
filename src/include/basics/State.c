@@ -7,6 +7,9 @@ State *createState(Globals *globals, StateStack *stack, StateID id) {
         case GameState:
             state = createGameState(globals, stack);
             break;
+        case PauseState:
+            state = createPauseState(globals, stack);
+            break;
         default:
             break;
     }
