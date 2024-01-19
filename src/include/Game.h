@@ -12,6 +12,7 @@
 #include "elements/PickUp.c"
 #include "states/GameState.c"
 #include "states/PauseState.c"
+#include "states/MenuState.c"
 #include "GUI/ButtonGroup.c"
 #include "GUI/ProgressBar.c"
 

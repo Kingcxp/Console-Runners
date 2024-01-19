@@ -24,13 +24,15 @@
 #include "basics/Renderer.h"
 #include "ScoreBoard.h"
 
-#define RENDER_WIDTH    20
-#define RENDER_HEIGHT   24
+#define TITLE L" Console Runners! "
+
+#define RENDER_WIDTH    31
+#define RENDER_HEIGHT   21
 
 #define ROAD_WIDTH      5
 #define ROAD_LENGTH     16
-#define GAME_OFFSETX    1
-#define GAME_OFFSETY    1
+#define GAME_OFFSETX    6
+#define GAME_OFFSETY    3
 
 typedef struct Globals {
     Renderer    *renderer;

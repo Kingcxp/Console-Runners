@@ -7,6 +7,10 @@
 
 
 bool PauseState_handleEvent(State *this, const int key) {
+    if (key == 27) {
+        *(float *)this->slots[4] = 3.f;
+    }
+    
     if (*(float *)this->slots[4] == 0.f) {
         ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
     }
@@ -92,7 +96,7 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     state->render = PauseState_render;
     state->isLowerVisible = true;
 
-    state->slots[0] = createButtonGroup(state, L'>', Color_Escape, Color_Escape, 72, 80, 13);
+    state->slots[0] = createButtonGroup(state, L'>', Color_LightPurple, Color_Yellow, 72, 80, 13);
     ButtonGroup *buttons = state->slots[0];
     buttons->pushButton(buttons, L"Continue", PauseState_Button_continue);
     buttons->pushButton(buttons, L"  Menu  ", PauseState_Button_menu);

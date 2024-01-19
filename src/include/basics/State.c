@@ -10,6 +10,9 @@ State *createState(Globals *globals, StateStack *stack, StateID id) {
         case PauseState:
             state = createPauseState(globals, stack);
             break;
+        case MenuState:
+            state = createMenuState(globals, stack);
+            break;
         default:
             break;
     }
@@ -20,6 +23,12 @@ void destroyState(State *state, StateID id) {
     switch (id) {
         case GameState:
             destroyGameState(state);
+            break;
+        case PauseState:
+            destroyPauseState(state);
+            break;
+        case MenuState:
+            destroyMenuState(state);
             break;
         default:
             break;

@@ -14,11 +14,8 @@
 #define SPEEDUP 0.005f
 
 bool GameState_handleEvent(State *this, const int key) {
-    if (key == 32) {
+    if (key == 27) {
         this->stack->pushState(this->stack, PauseState);
-        return false;
-    } else if (key == 27) {
-        this->stack->popState(this->stack);
         return false;
     }
 
@@ -176,7 +173,7 @@ void GameState_render(const State *this, const Renderer *renderer) {
     // Render road border.
     Vector2i position;
     for (int i = 0; i < ROAD_LENGTH; ++i) {
-        Color color = Color_Escape;
+        Color color = Color_LightBlue;
         position.y = i + GAME_OFFSETY;
         position.x = GAME_OFFSETX;
         renderer->renderCharAt(renderer, L'|', &color, &position);
@@ -208,10 +205,11 @@ void GameState_render(const State *this, const Renderer *renderer) {
 
     // Render score
     wchar_t scoreString[15];
-    wsprintfW(scoreString, L"Score: %06d", (int)floor(this->globals->scoreBoard->score));
+    wsprintfW(scoreString, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
     position.x = GAME_OFFSETX;
     position.y = GAME_OFFSETY - 1;
-    renderer->renderStringAt(renderer, scoreString, NULL, &position, true);
+    Color color = Color_LightPurple;
+    renderer->renderStringAt(renderer, scoreString, &color, &position, true);
 }
 
 State *createGameState(Globals *globals, StateStack *stack) {

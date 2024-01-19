@@ -1,8 +1,39 @@
 #include "Game.h"
 
+void renderBorder(const Renderer *renderer) {
+    Vector2i position;
+    position.x = 0, position.y = 0;
+    for (int i = 1; i < RENDER_WIDTH; ++i) {
+        renderer->renderCharAt(renderer, L'─', NULL, &position);
+        position.y = RENDER_HEIGHT - 1;
+        renderer->renderCharAt(renderer, L'─', NULL, &position);
+        position.y = 0;
+        position.x++;
+    }
+    position.x = 0;
+    for (int i = 1; i < RENDER_HEIGHT; ++i) {
+        renderer->renderCharAt(renderer, L'│', NULL, &position);
+        position.x = RENDER_WIDTH - 1;
+        renderer->renderCharAt(renderer, L'│', NULL, &position);
+        position.x = 0;
+        position.y++;
+    }
+    position.y = 0;
+    renderer->renderCharAt(renderer, L'┌', NULL, &position);
+    position.y = RENDER_HEIGHT - 1;
+    renderer->renderCharAt(renderer, L'└', NULL, &position);
+    position.x = RENDER_WIDTH - 1;
+    renderer->renderCharAt(renderer, L'┘', NULL, &position);
+    position.y = 0;
+    renderer->renderCharAt(renderer, L'┐', NULL, &position);
+    position.x = (RENDER_WIDTH >> 1) - ((wcslen(TITLE) + 1) >> 1);
+    Color color = Color_YellowBlink;
+    renderer->renderStringAt(renderer, TITLE, &color, &position, true);
+}
+
 void Game_loop(Game *this) {
     clock_t now = clock();
-    this->stack->pushState(this->stack, GameState);
+    this->stack->pushState(this->stack, MenuState);
 
     while (!this->stack->isEmpty(this->stack)) {
         // Event handling process
@@ -19,6 +50,7 @@ void Game_loop(Game *this) {
 
         // Render process
         this->globals.renderer->clear(this->globals.renderer);
+        renderBorder(this->globals.renderer);
         this->stack->render(this->stack, this->globals.renderer);
         this->globals.renderer->display(this->globals.renderer);
     }

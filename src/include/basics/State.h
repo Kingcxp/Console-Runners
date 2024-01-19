@@ -11,6 +11,7 @@ typedef struct StateStack StateStack;
 typedef enum StateID {
     GameState,
     PauseState,
+    MenuState,
     // TODO: Register more states here.
 } StateID;
 
@@ -37,5 +38,8 @@ void destroyGameState(State *state);
 
 State *createPauseState(Globals *globals, StateStack *stack);
 void destroyPauseState(State *state);
+
+State *createMenuState(Globals *globals, StateStack *stack);
+void destroyMenuState(State *state);
 
 #endif // STATE
