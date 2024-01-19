@@ -16,6 +16,8 @@ typedef struct ScoreBoard {
     
     bool    isInvincible;
     float   invincibleTimer;
+    int     lastRevivedTimes,
+            revivedTimes;
 } ScoreBoard;
 
 ScoreBoard *createScoreBoard();

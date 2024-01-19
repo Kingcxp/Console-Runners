@@ -40,6 +40,11 @@ bool GameState_update(State *this, float deltaTime) {
     Runner *runner = this->slots[6];
     runner->update(runner, deltaTime);
 
+    if (this->globals->scoreBoard->lastRevivedTimes < this->globals->scoreBoard->revivedTimes) {
+        this->globals->scoreBoard->lastRevivedTimes = this->globals->scoreBoard->revivedTimes;
+        runner->revive(runner);
+    }
+
     if (runner->isDead) {
         return false;
     }
@@ -141,6 +146,8 @@ bool GameState_update(State *this, float deltaTime) {
             ((Obstacle *)this->slots[i])->collideRunner(this->slots[i], runner) &&
             !this->globals->scoreBoard->isInvincible) {
             runner->die(runner);
+            // TODO: Free this line.
+            // this->stack->pushState(this->stack, ReviveState);
             continue;
         }
         if (((Obstacle *)this->slots[i])->position.y >= ROAD_LENGTH + GAME_OFFSETY) {
@@ -219,6 +226,8 @@ State *createGameState(Globals *globals, StateStack *stack) {
     state->globals->scoreBoard->score = 0;
     state->globals->scoreBoard->isInvincible = false;
     state->globals->scoreBoard->invincibleTimer = 0.f;
+    state->globals->scoreBoard->lastRevivedTimes = 0;
+    state->globals->scoreBoard->revivedTimes = 0;
     state->stack = stack;
     state->isLowerVisible = false;
 

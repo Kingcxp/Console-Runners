@@ -13,6 +13,15 @@ State *createState(Globals *globals, StateStack *stack, StateID id) {
         case MenuState:
             state = createMenuState(globals, stack);
             break;
+        case ReviveState:
+            state = createReviveState(globals, stack);
+            break;
+        case StoreState:
+            state = createStoreState(globals, stack);
+            break;
+        case InfoState:
+            state = createInfoState(globals, stack);
+            break;
         default:
             break;
     }
@@ -29,6 +38,15 @@ void destroyState(State *state, StateID id) {
             break;
         case MenuState:
             destroyMenuState(state);
+            break;
+        case ReviveState:
+            destroyReviveState(state);
+            break;
+        case StoreState:
+            destroyStoreState(state);
+            break;
+        case InfoState:
+            destroyInfoState(state);
             break;
         default:
             break;

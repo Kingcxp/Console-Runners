@@ -13,6 +13,9 @@
 #include "states/GameState.c"
 #include "states/PauseState.c"
 #include "states/MenuState.c"
+#include "states/ReviveState.c"
+#include "states/StoreState.c"
+#include "states/InfoState.c"
 #include "GUI/ButtonGroup.c"
 #include "GUI/ProgressBar.c"
 

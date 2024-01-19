@@ -134,6 +134,11 @@ void Runner_die(Runner *this) {
     this->frame = random(0, this->deadFrameCount - 1);
 }
 
+void Runner_revive(Runner *this) {
+    this->isDead = false;
+    this->frame = 0;
+}
+
 const Rect Runner_getCollisionRect(const Runner *this) {
     Rect rect;
     rect.x = floor(this->position.x + this->trackDelta) - 1, rect.y = floor(this->position.y + this->jumpDelta) - 3;
@@ -179,6 +184,7 @@ Runner *createRunner(const RunnerType type) {
     runner->update = Runner_update;
     runner->render = Runner_render;
     runner->die = Runner_die;
+    runner->revive = Runner_revive;
     runner->getCollisionRect = Runner_getCollisionRect;
     runner->getCollisionChar = Runner_getCollisionChar;
 

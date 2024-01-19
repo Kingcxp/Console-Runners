@@ -30,6 +30,7 @@ typedef struct Runner {
     void                (*render)(const struct Runner *this, const Renderer *renderer);
 
     void                (*die)(struct Runner *this);
+    void                (*revive)(struct Runner *this);
 
     const Rect          (*getCollisionRect)(const struct Runner *this);
     const char          (*getCollisionChar)(const struct Runner *this, const Vector2i position);
