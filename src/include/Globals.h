@@ -25,6 +25,9 @@
 #include "ScoreBoard.h"
 
 #define TITLE L" Console Runners! "
+#define AUTHOR L"By Kingcq"
+#define VERSION L"v1.14.514"
+#define COPYRIGHT L" Copyright @ 2024 Kingcq "
 
 #define RENDER_WIDTH    31
 #define RENDER_HEIGHT   23

@@ -76,7 +76,7 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     buttons->pushButton(buttons, L"Store", MenuState_Button_store);
     buttons->pushButton(buttons, L"Info", MenuState_Button_info);
     buttons->pushButton(buttons, L"Quit", MenuStaet_Button_quit);
-    buttons->position.y = 12;
+    buttons->position.y = 13;
     buttons->position.x = 11;
 
     return state;

@@ -26,9 +26,12 @@ void renderBorder(const Renderer *renderer) {
     renderer->renderCharAt(renderer, L'┘', NULL, &position);
     position.y = 0;
     renderer->renderCharAt(renderer, L'┐', NULL, &position);
-    position.x = (RENDER_WIDTH >> 1) - ((wcslen(TITLE) + 1) >> 1);
-    Color color = Color_YellowBlink;
+    position.x = (RENDER_WIDTH >> 1) - (wcslen(TITLE) >> 1);
+    Color color = Color_Yellow;
     renderer->renderStringAt(renderer, TITLE, &color, &position, true);
+    position.y = RENDER_HEIGHT - 1;
+    position.x = (RENDER_WIDTH >> 1) - (wcslen(COPYRIGHT) >> 1);
+    renderer->renderStringAt(renderer, COPYRIGHT, &color, &position, true);
 }
 
 void Game_loop(Game *this) {
