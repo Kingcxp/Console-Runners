@@ -12,7 +12,7 @@ bool StoreState_update(State *this, float deltaTime) {
     return false;
 }
 
-void StoreState_render(State *this) {
+void StoreState_render(const State *this, const Renderer *renderer) {
 
 }
 

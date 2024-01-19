@@ -13,7 +13,7 @@ bool ReviveState_update(State *this, float deltaTime) {
     return false;
 }
 
-void ReviveState_render(State *this) {
+void ReviveState_render(const State *this, const Renderer *renderer) {
     
 }
 

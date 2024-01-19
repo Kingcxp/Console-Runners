@@ -12,7 +12,7 @@ bool InfoState_update(State *this, float deltaTime) {
     return false;
 }
 
-void InfoState_render(State *this) {
+void InfoState_render(const State *this, const Renderer *renderer) {
 
 }
 
