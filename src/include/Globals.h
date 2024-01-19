@@ -27,12 +27,12 @@
 #define TITLE L" Console Runners! "
 
 #define RENDER_WIDTH    31
-#define RENDER_HEIGHT   21
+#define RENDER_HEIGHT   23
 
 #define ROAD_WIDTH      5
 #define ROAD_LENGTH     16
 #define GAME_OFFSETX    6
-#define GAME_OFFSETY    3
+#define GAME_OFFSETY    5
 
 typedef struct Globals {
     Renderer    *renderer;

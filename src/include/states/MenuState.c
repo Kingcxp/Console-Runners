@@ -41,7 +41,11 @@ void MenuState_Button_start(State *state) {
 }
 
 void MenuState_Button_store(State *state) {
-    // TODO: Add store
+    // TODO: Add store state.
+}
+
+void MenuState_Button_info(State *state) {
+    // TODO: Add info state.
 }
 
 void MenuStaet_Button_quit(State *state) {
@@ -70,6 +74,7 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     state->slots[6] = buttons;
     buttons->pushButton(buttons, L"Start", MenuState_Button_start);
     buttons->pushButton(buttons, L"Store", MenuState_Button_store);
+    buttons->pushButton(buttons, L"Info", MenuState_Button_info);
     buttons->pushButton(buttons, L"Quit", MenuStaet_Button_quit);
     buttons->position.y = 12;
     buttons->position.x = 11;

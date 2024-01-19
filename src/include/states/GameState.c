@@ -207,7 +207,7 @@ void GameState_render(const State *this, const Renderer *renderer) {
     wchar_t scoreString[15];
     wsprintfW(scoreString, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
     position.x = GAME_OFFSETX;
-    position.y = GAME_OFFSETY - 1;
+    position.y = GAME_OFFSETY - 3;
     Color color = Color_LightPurple;
     renderer->renderStringAt(renderer, scoreString, &color, &position, true);
 }
