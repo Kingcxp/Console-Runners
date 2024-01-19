@@ -7,12 +7,21 @@
 
 
 bool PauseState_handleEvent(State *this, const int key) {
-    ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
+    if (*(float *)this->slots[4] == 0.f) {
+        ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
+    }
 
     return false;
 }
 
 bool PauseState_update(State *this, float deltaTime) {
+    if (*(float *)this->slots[4] > 0.f) {
+        *(float *)this->slots[4] -= deltaTime;
+        if (*(float *)this->slots[4] <= 0.f) {
+            *(float *)this->slots[4] = 0.f;
+            this->stack->popState(this->stack);
+        }
+    }
     return false;
 }
 
@@ -40,12 +49,32 @@ void PauseState_render(const State *this, const Renderer *renderer) {
     renderer->renderStringAt(renderer, L"║            ║", &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, L"╚════════════╝", &color, &position, true);
 
-    // Render buttons
-    ((ButtonGroup *)this->slots[0])->render(this->slots[0], renderer);
+    // Render buttons or countdown
+    if (*(float *)this->slots[4] == 0.f) {
+        ((ButtonGroup *)this->slots[0])->render(this->slots[0], renderer);
+    } else {
+        color = Color_RedBlink;
+        position.y -= 4;
+        position.x += 6;
+        int current = (int)ceil(*(float *)this->slots[4]);
+        if (current == 1) {
+            renderer->renderStringAt(renderer, L" ┫ ", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L" ┃ ", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L" ┇ ", &color, &position, true);
+        } else if (current == 2) {
+            renderer->renderStringAt(renderer, L"┏━┓", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L"┏━┛", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L"┗━━", &color, &position, true);
+        } else if (current == 3) {
+            renderer->renderStringAt(renderer, L"┏━┓", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L" ━┫", &color, &position, true); position.y += 1;
+            renderer->renderStringAt(renderer, L"┗━┛", &color, &position, true);
+        }
+    }
 }
 
 void PauseState_Button_continue(State *state) {
-    state->stack->popState(state->stack);
+    *(float *)state->slots[4] = 3.f;
 }
 
 void PauseState_Button_menu(State *state) {
@@ -74,10 +103,14 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     state->slots[2] = L"┃━┛┃━┫┃ ┃┗━┓┣━ ┃ ┃┃";
     state->slots[3] = L"┇  ┛ ┇┇━┛━━┛┻━┛┇━┛o";
 
+    state->slots[4] = malloc(sizeof(float));
+    *(float *)state->slots[4] = 0.f;
+
     return state;
 }
 
 void destroyPauseState(State *state) {
+    free(state->slots[4]);
     destroyButtonGroup(state->slots[0]);
 
     free(state);
