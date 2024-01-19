@@ -54,7 +54,7 @@ void Runner_update(Runner *this, float deltaTime) {
     // Managing states
     if (this->status == Jumping) {
         this->jumpDelta -= this->jumpVelocity * deltaTime;
-        this->jumpVelocity -= this->gravity * deltaTime * (this->readyToRoll ? 4.f : 1.f);
+        this->jumpVelocity -= this->gravity * deltaTime * (this->readyToRoll ? 8.f : 1.f);
         if (this->jumpDelta > 0.f) {
             this->jumpDelta = 0.f;
             this->jumpVelocity = 0.f;

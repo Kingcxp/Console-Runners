@@ -1,6 +1,9 @@
 #include "ProgressBar.h"
 
 void ProgressBar_update(ProgressBar *this, float deltaTime) {
+    if (this->follow) {
+        this->setProgress(this, *this->follow);
+    }
     if (this->progress > this->target) {
         this->progress -= SCROLL_SPEED * deltaTime;
         if (this->progress < this->target) {
@@ -89,6 +92,7 @@ ProgressBar *createProgressBar(Color color, int width, int height, float progres
     bar->size = (Vector2i){width, height};
     bar->progress = progress;
     bar->total = total;
+    bar->follow = NULL;
 
     return bar;
 }

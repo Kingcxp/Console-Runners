@@ -3,16 +3,26 @@
 
 
 #include "../basics/State.h"
+#include "../basics/StateStack.h"
 #include "../resources/runners/RunnerList.h"
 #include "../resources/obstacles/ObstacleList.h"
 #include "../resources/pickups/PickUpList.h"
 
 #define SAFETY_TIME 1.2f
 #define PICKUP_INTERVAL 0.4f
-#define GAME_OFFSETX 1
-#define GAME_OFFSETY 1
+#define SCORE_SPEED 10
+#define SPEEDUP 0.005f
 
 bool GameState_handleEvent(State *this, const int key) {
+    if (key == 32) {
+        // TODO: Pause the game
+        // this->stack->pushState(this->stack, PauseState);
+        // return false;
+    } else if (key == 27) {
+        this->stack->popState(this->stack);
+        return false;
+    }
+
     Runner *runner = this->slots[6];
     runner->handleEvent(runner, key);
 
@@ -31,6 +41,24 @@ bool GameState_handleEvent(State *this, const int key) {
 }
 
 bool GameState_update(State *this, float deltaTime) {
+    Runner *runner = this->slots[6];
+    runner->update(runner, deltaTime);
+
+    if (runner->isDead) {
+        return false;
+    }
+
+    // Update score
+    this->globals->scoreBoard->score += SCORE_SPEED * runner->runningSpeed * deltaTime;
+    runner->runningSpeed *= (1.f + SPEEDUP * deltaTime);
+    if (this->globals->scoreBoard->isInvincible) {
+        this->globals->scoreBoard->invincibleTimer -= deltaTime;
+        if (this->globals->scoreBoard->invincibleTimer <= 0.f) {
+            this->globals->scoreBoard->invincibleTimer = 0.f;
+            this->globals->scoreBoard->isInvincible = false;
+        }
+    }
+
     bool satisfy = false;
     for (int i = 0; i < 3; ++i) {
         *(float *)this->slots[i] += deltaTime;
@@ -108,15 +136,14 @@ bool GameState_update(State *this, float deltaTime) {
         }
     }
 
-    Runner *runner = this->slots[6];
-    runner->update(runner, deltaTime);
-
     for (int i = 7; i * 2 < STATE_SLOTS; ++i) {
         if (!this->slots[i]) {
             continue;
         }
         ((Obstacle *)this->slots[i])->update(this->slots[i], deltaTime, runner->runningSpeed);
-        if (floor(((Obstacle *)this->slots[i])->position.y) == ROAD_LENGTH + GAME_OFFSETY - 1 && ((Obstacle *)this->slots[i])->collideRunner(this->slots[i], runner)) {
+        if (floor(((Obstacle *)this->slots[i])->position.y) == ROAD_LENGTH + GAME_OFFSETY - 1 &&
+            ((Obstacle *)this->slots[i])->collideRunner(this->slots[i], runner) &&
+            !this->globals->scoreBoard->isInvincible) {
             runner->die(runner);
             continue;
         }
@@ -133,6 +160,8 @@ bool GameState_update(State *this, float deltaTime) {
         ((PickUp *)this->slots[i])->update(this->slots[i], deltaTime, runner->runningSpeed);
         if (floor(((PickUp *)this->slots[i])->position.y) == ROAD_LENGTH + GAME_OFFSETY - 1 && ((PickUp *)this->slots[i])->collideRunner(this->slots[i], runner)) {
             ((PickUp *)this->slots[i])->takeEffect(this->slots[i], runner);
+            destroyPickUp(this->slots[i]);
+            this->slots[i] = NULL;
             continue;
         }
         if (((PickUp *)this->slots[i])->position.y >= ROAD_LENGTH + GAME_OFFSETY) {
@@ -177,12 +206,22 @@ void GameState_render(const State *this, const Renderer *renderer) {
     // Render runner
     Runner *runner = this->slots[6];
     runner->render(runner, renderer);
+
+    // Render score
+    wchar_t scoreString[15];
+    wsprintfW(scoreString, L"Score: %06d", (int)floor(this->globals->scoreBoard->score));
+    position.x = GAME_OFFSETX;
+    position.y = GAME_OFFSETY - 1;
+    renderer->renderStringAt(renderer, scoreString, NULL, &position);
 }
 
 State *createGameState(Globals *globals, StateStack *stack) {
     State *state = malloc(sizeof(State));
 
     state->globals = globals;
+    state->globals->scoreBoard->score = 0;
+    state->globals->scoreBoard->isInvincible = false;
+    state->globals->scoreBoard->invincibleTimer = 0.f;
     state->stack = stack;
     state->isLowerVisible = false;
 
@@ -213,6 +252,7 @@ State *createGameState(Globals *globals, StateStack *stack) {
 }
 
 void destroyGameState(State *state) {
+    state->globals->scoreBoard->highScore = max(state->globals->scoreBoard->highScore, (int)floor(state->globals->scoreBoard->score));
     destroyRunner(state->slots[6]);
     for (int i = 0; i < 4; ++i) {
         free(state->slots[i]);

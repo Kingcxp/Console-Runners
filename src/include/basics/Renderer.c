@@ -9,7 +9,7 @@ void Renderer_renderCharAt(const Renderer *this, const wchar_t ch, const Color *
         return;
     }
     this->canvas[position->y][position->x] = ch;
-    this->colors[position->y][position->x] = *color;
+    this->colors[position->y][position->x] = color ? *color : Color_Escape;
 }
 
 void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Color *colors, const Vector2i *position) {
@@ -19,7 +19,7 @@ void Renderer_renderStringAt(const Renderer *this, const wchar_t *str, const Col
             continue;
         }
         this->canvas[position->y][position->x + i] = str[i];
-        this->colors[position->y][position->x + i] = colors[i];
+        this->colors[position->y][position->x + i] = colors ? colors[i] : Color_Escape;
     }
 }
 
@@ -40,10 +40,10 @@ void Renderer_display(const Renderer *this) {
             }
             this->lastCanvas[i][j] = this->canvas[i][j];
             this->lastColors[i][j] = this->colors[i][j];
-            printf(ANSI_Colors[this->colors[i][j]]);
+            wprintf(ANSI_Colors[this->colors[i][j]]);
             setCursor(this->x + j, this->y + i);
             putwchar(this->canvas[i][j]);
-            printf(ANSI_Colors[Color_Escape]);
+            wprintf(ANSI_Colors[Color_Escape]);
         }
     }
 }

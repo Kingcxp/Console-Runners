@@ -7,7 +7,15 @@ typedef struct ScoreBoard {
 
     // Variables
 
-    int     coins;
+    int     coins,
+            highScore;
+
+    // In-game variables
+
+    float   score;
+    
+    bool    isInvincible;
+    float   invincibleTimer;
 } ScoreBoard;
 
 ScoreBoard *createScoreBoard();

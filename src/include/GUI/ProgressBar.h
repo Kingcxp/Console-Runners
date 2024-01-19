@@ -19,6 +19,7 @@ typedef struct ProgressBar {
 
     float           progress,
                     target,
+                    *follow,
                     total;
 
     Color           color;

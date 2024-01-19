@@ -26,6 +26,7 @@ const short Coin_height = 3;
 
 void Coin_takeEffect(PickUp *this, Runner *runner) {
     this->globals->scoreBoard->coins += 1;
+    this->globals->scoreBoard->score += 100.f;
 }
 
 #endif // PICKUP_COIN

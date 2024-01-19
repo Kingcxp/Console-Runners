@@ -1,6 +1,9 @@
 #include "StateStack.h"
 
 void StateStack_handleEvent(StateStack *this, const int key) {
+    if (this->isEmpty(this)) {
+        return;
+    }
     for (int i = this->stackTop; i >= 0; --i) {
         if (!this->stack[i]->handleEvent(this->stack[i], key)) {
             break;
@@ -10,6 +13,9 @@ void StateStack_handleEvent(StateStack *this, const int key) {
 }
 
 void StateStack_update(StateStack *this, float deltaTime) {
+    if (this->isEmpty(this)) {
+        return;
+    }
     for (int i = this->stackTop; i >= 0; --i) {
         if (!this->stack[i]->update(this->stack[i], deltaTime)) {
             break;
@@ -19,6 +25,9 @@ void StateStack_update(StateStack *this, float deltaTime) {
 }
 
 void StateStack_render(const StateStack *this, const Renderer *renderer) {
+    if (this->isEmpty(this)) {
+        return;
+    }
     int i = this->stackTop;
     while (i > 0 && this->stack[i]->isLowerVisible) {
         --i;

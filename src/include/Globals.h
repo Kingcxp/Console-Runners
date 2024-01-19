@@ -29,6 +29,8 @@
 
 #define ROAD_WIDTH      5
 #define ROAD_LENGTH     16
+#define GAME_OFFSETX    1
+#define GAME_OFFSETY    1
 
 typedef struct Globals {
     Renderer    *renderer;
