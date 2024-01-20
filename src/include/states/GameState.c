@@ -211,8 +211,8 @@ void GameState_render(const State *this, const Renderer *renderer) {
     runner->render(runner, renderer);
 
     // Render score
-    wchar_t scoreString[20];
-    swprintf(scoreString, 16, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
+    wchar_t scoreString[21];
+    swprintf(scoreString, 20, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
     position.x = GAME_OFFSETX;
     position.y = GAME_OFFSETY - 3;
     Color color = Color_LightPurple;
