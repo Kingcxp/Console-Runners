@@ -47,12 +47,13 @@ void Renderer_display(const Renderer *this) {
             if (this->canvas[i][j] == this->lastCanvas[i][j] && this->colors[i][j] == this->lastColors[i][j]) {
                 continue;
             }
+            wprintf(L"%d %d\n", i, j);
             this->lastCanvas[i][j] = this->canvas[i][j];
             this->lastColors[i][j] = this->colors[i][j];
-            setCursor(this->x + j, this->y + i);
-            wprintf(ANSI_Colors[this->colors[i][j]]);
-            putwchar(this->canvas[i][j]);
-            wprintf(ANSI_Colors[Color_Escape]);
+            // setCursor(this->x + j, this->y + i);
+            // wprintf(ANSI_Colors[this->colors[i][j]]);
+            // putwchar(this->canvas[i][j]);
+            // wprintf(ANSI_Colors[Color_Escape]);
         }
     }
 }
