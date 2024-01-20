@@ -45,6 +45,8 @@ void Renderer_display(const Renderer *this) {
     for (int i = 0; i < this->height; ++i) {
         for (int j = 0; j < this->width; ++j) {
             if (this->canvas[i][j] == this->lastCanvas[i][j] && this->colors[i][j] == this->lastColors[i][j]) {
+                setCursor(this->x + j, this->y + i);
+                putwchar('?');
                 continue;
             }
             this->lastCanvas[i][j] = this->canvas[i][j];
