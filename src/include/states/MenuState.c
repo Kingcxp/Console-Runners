@@ -7,7 +7,7 @@
 #include "../GUI/ButtonGroup.h"
 
 bool MenuState_handleEvent(State *this, const int key) {
-    if (key == 27) {
+    if (key == ESC) {
         this->stack->popState(this->stack);
         return false;
     }

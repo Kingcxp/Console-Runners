@@ -14,7 +14,7 @@
 #define SPEEDUP 0.005f
 
 bool GameState_handleEvent(State *this, const int key) {
-    if (key == 27) {
+    if (key == ESC) {
         this->stack->pushState(this->stack, PauseState);
         return false;
     }

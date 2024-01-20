@@ -20,6 +20,7 @@
 #define ARROW_UP 72
 #define ARROW_DOWN 80
 #define ENTER 13
+#define ESC 27
 #else
 #include <termios.h>
 #include <fcntl.h>
@@ -31,6 +32,7 @@
 #define ARROW_UP 65
 #define ARROW_DOWN 66
 #define ENTER 10
+#define ESC 27
 
 static struct termios initial_settings, new_settings;
 static int peek_character = -1;

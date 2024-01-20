@@ -7,7 +7,7 @@
 
 
 bool PauseState_handleEvent(State *this, const int key) {
-    if (key == 27) {
+    if (key == ESC) {
         *(float *)this->slots[4] = 3.f;
     }
     
