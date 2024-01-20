@@ -53,6 +53,7 @@ void Renderer_display(const Renderer *this) {
             setCursor(this->x + j, this->y + i);
             if (this->colors[i][j] != current) {
                 current = this->colors[i][j];
+                wprintf(ANSI_Colors[Color_Escape]);
                 wprintf(ANSI_Colors[this->colors[i][j]]);
             }
             putwchar(this->canvas[i][j]);
