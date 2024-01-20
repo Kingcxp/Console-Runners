@@ -47,7 +47,7 @@ void Game_loop(Game *this) {
             this->stack->handleEvent(this->stack, ch);
         }
         // Update process
-        float deltaTime = (clock() - now) / CLOCKS_PER_SEC;
+        float deltaTime = (float)(clock() - now) / (float)CLOCKS_PER_SEC;
         now = clock();
         this->stack->update(this->stack, deltaTime);
 
