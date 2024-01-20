@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.24)
-project(SubwaySurfers)
+project(ConsoleRunners)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(SubwaySurfers src/main.c)
+add_executable(ConsoleRunners src/main.c)
 
 if(CMAKE_HOST_SYSTEM MATCHES "Linux")
-    target_link_libraries(SubwaySurfers pthread m dl)
+    target_link_libraries(ConsoleRunners pthread m dl)
 endif()
