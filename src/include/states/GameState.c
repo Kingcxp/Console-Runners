@@ -40,17 +40,24 @@ bool GameState_update(State *this, float deltaTime) {
     Runner *runner = this->slots[6];
     runner->update(runner, deltaTime);
 
+    // Handle revive
+    if (this->globals->scoreBoard->reviveTimer > 0.f && runner->isDead) {
+        this->globals->scoreBoard->reviveTimer -= deltaTime;
+        if (this->globals->scoreBoard->reviveTimer <= 0.f) {
+            this->globals->scoreBoard->reviveTimer = 0.f;
+            this->stack->pushState(this->stack, ReviveState);
+            return false;
+        }
+    }
+
     if (this->globals->scoreBoard->lastRevivedTimes < this->globals->scoreBoard->revivedTimes) {
         this->globals->scoreBoard->lastRevivedTimes = this->globals->scoreBoard->revivedTimes;
         runner->revive(runner);
     }
 
-    if (runner->isDead) {
-        return false;
-    }
-
     // Update score
     this->globals->scoreBoard->score += SCORE_SPEED * runner->runningSpeed * deltaTime;
+    this->globals->scoreBoard->highScore = fmax(this->globals->scoreBoard->highScore, (int)floor(this->globals->scoreBoard->score));
     runner->runningSpeed *= (1.f + SPEEDUP * deltaTime);
     if (this->globals->scoreBoard->isInvincible) {
         this->globals->scoreBoard->invincibleTimer -= deltaTime;
@@ -146,8 +153,7 @@ bool GameState_update(State *this, float deltaTime) {
             ((Obstacle *)this->slots[i])->collideRunner(this->slots[i], runner) &&
             !this->globals->scoreBoard->isInvincible) {
             runner->die(runner);
-            // TODO: Free this line.
-            // this->stack->pushState(this->stack, ReviveState);
+            this->globals->scoreBoard->reviveTimer = 1.f;
             continue;
         }
         if (((Obstacle *)this->slots[i])->position.y >= ROAD_LENGTH + GAME_OFFSETY) {
@@ -211,12 +217,18 @@ void GameState_render(const State *this, const Renderer *renderer) {
     runner->render(runner, renderer);
 
     // Render score
-    wchar_t scoreString[21];
-    swprintf(scoreString, 20, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
+    wchar_t hiscoreString[25], scoreString[25], coinString[25];
+    swprintf(hiscoreString, 24, L" HiScore: %06d   ", (int)floor(this->globals->scoreBoard->score));
+    swprintf(scoreString, 24, L"   Score: %06d   ", (int)floor(this->globals->scoreBoard->score));
+    swprintf(coinString, 24, L"   Coins: %06d   ", (int)floor(this->globals->scoreBoard->coins));
     position.x = GAME_OFFSETX;
-    position.y = GAME_OFFSETY - 3;
+    position.y = GAME_OFFSETY - 4;
     Color color = Color_LightPurple;
+    renderer->renderStringAt(renderer, hiscoreString, &color, &position, true);
+    position.y += 1;
     renderer->renderStringAt(renderer, scoreString, &color, &position, true);
+    position.y += 1;
+    renderer->renderStringAt(renderer, coinString, &color, &position, true);
 }
 
 State *createGameState(Globals *globals, StateStack *stack) {
@@ -258,7 +270,6 @@ State *createGameState(Globals *globals, StateStack *stack) {
 }
 
 void destroyGameState(State *state) {
-    state->globals->scoreBoard->highScore = fmax(state->globals->scoreBoard->highScore, (int)floor(state->globals->scoreBoard->score));
     destroyRunner(state->slots[6]);
     for (int i = 0; i < 4; ++i) {
         free(state->slots[i]);

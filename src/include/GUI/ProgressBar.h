@@ -5,7 +5,7 @@
 #include <math.h>
 #include "../basics/Renderer.h"
 
-#define SCROLL_SPEED 6.f
+#define SCROLL_SPEED 100.f
 
 typedef struct ProgressBar {
     // Methods

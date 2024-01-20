@@ -12,10 +12,12 @@ typedef struct ScoreBoard {
 
     // In-game variables
 
+    // GameState variables
+
     float   score;
-    
     bool    isInvincible;
-    float   invincibleTimer;
+    float   invincibleTimer,
+            reviveTimer;
     int     lastRevivedTimes,
             revivedTimes;
 } ScoreBoard;

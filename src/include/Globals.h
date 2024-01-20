@@ -47,12 +47,15 @@ static int peek_character = -1;
 #define COPYRIGHT L" Copyright @ 2024 Kingcq "
 
 #define RENDER_WIDTH    31
-#define RENDER_HEIGHT   23
+#define RENDER_HEIGHT   24
+
+#define BORDER_WIDTH    31
+#define BORDER_HEIGHT   24
 
 #define ROAD_WIDTH      5
 #define ROAD_LENGTH     16
 #define GAME_OFFSETX    6
-#define GAME_OFFSETY    5
+#define GAME_OFFSETY    6
 
 #define QUIT 113
 

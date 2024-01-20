@@ -45,33 +45,11 @@ void ProgressBar_render(const ProgressBar *this, const Renderer *renderer) {
     }
 
     // render progress
-    int progressAt = floor((this->size.x - 2) * this->progress / this->total),
-        targetAt = floor((this->size.x - 2) * this->target / this->total);
+    int progressAt = floor((this->size.x - 2) * this->progress / this->total);
     position.x = this->position.x + 1, position.y = this->position.y + 1;
-    if (this->target <= this->progress) {
-        for (int i = 0; i < this->size.y - 2; ++i) {
-            for (int j = 0; j < targetAt; ++j) {
-                renderer->renderCharAt(renderer, L'█', &this->color, &position);
-                position.x += 1;
-            }
-            for (int j = targetAt; j < progressAt; ++j) {
-                renderer->renderCharAt(renderer, L'▓', &this->color, &position);
-                position.x += 1;
-            }
-            if (progressAt == targetAt) {
-                renderer->renderCharAt(renderer, L'▓', &this->color, &position);
-                position.x += 1;
-            }
-            if (position.x < this->position.x + this->size.x - 1) {
-                renderer->renderCharAt(renderer, L'▒', &this->color, &position);
-                position.x += 1;
-            }
-            if (position.x < this->position.x + this->size.x - 1) {
-                renderer->renderCharAt(renderer, L'░', &this->color, &position);
-                position.x += 1;
-            }
-            position.y += 1;
-        }
+    for (int j = 0; j <= progressAt; ++j) {
+        renderer->renderCharAt(renderer, L'█', &this->color, &position);
+        position.x += 1;
     }
 }
 
@@ -86,13 +64,17 @@ void ProgressBar_forceProgress(ProgressBar *this, const float progress) {
 ProgressBar *createProgressBar(Color color, int width, int height, float progress, float total) {
     ProgressBar *bar = (ProgressBar *)malloc(sizeof(ProgressBar));
 
+    bar->update = ProgressBar_update;
     bar->render = ProgressBar_render;
+    bar->setProgress = ProgressBar_setProgress;
+    bar->forceProgress = ProgressBar_forceProgress;
 
     bar->position = (Vector2i){0, 0};
     bar->size = (Vector2i){width, height};
     bar->progress = progress;
     bar->total = total;
     bar->follow = NULL;
+    bar->color = color;
 
     return bar;
 }

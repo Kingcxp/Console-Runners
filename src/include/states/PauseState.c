@@ -32,10 +32,9 @@ bool PauseState_update(State *this, float deltaTime) {
 void PauseState_render(const State *this, const Renderer *renderer) {
     Vector2i position;
     Color color = Color_Green;
-    position.x = GAME_OFFSETX, position.y = GAME_OFFSETY - 2;
+    position.x = GAME_OFFSETX, position.y = GAME_OFFSETY + 1;
     
     // Render title
-    position.y += 3;
     for (int i = 1; i <= 3; ++i) {
         renderer->renderStringAt(renderer, this->slots[i], &color, &position, true);
         position.y += 1;
@@ -96,7 +95,7 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     state->render = PauseState_render;
     state->isLowerVisible = true;
 
-    state->slots[0] = createButtonGroup(state, L'>', Color_LightPurple, Color_Yellow, UP, DOWN, ENTER);
+    state->slots[0] = createButtonGroup(state, L'>', Color_LightGreen, Color_Yellow, UP, DOWN, ENTER);
     ButtonGroup *buttons = state->slots[0];
     buttons->pushButton(buttons, L"Continue", PauseState_Button_continue);
     buttons->pushButton(buttons, L"  Menu  ", PauseState_Button_menu);
