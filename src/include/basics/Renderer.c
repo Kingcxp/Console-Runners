@@ -42,20 +42,23 @@ void Renderer_clear(const Renderer *this) {
 }
 
 void Renderer_display(const Renderer *this) {
+    Color current = Color_Escape;
     for (int i = 0; i < this->height; ++i) {
+        setCursor(this->x, this->y + i);
         for (int j = 0; j < this->width; ++j) {
             if (this->canvas[i][j] == this->lastCanvas[i][j] && this->colors[i][j] == this->lastColors[i][j]) {
                 continue;
             }
-            // wprintf(L"%d %d\n", i, j);
             this->lastCanvas[i][j] = this->canvas[i][j];
             this->lastColors[i][j] = this->colors[i][j];
-            setCursor(this->x + j, this->y + i);
-            // wprintf(ANSI_Colors[this->colors[i][j]]);
+            if (this->colors[i][j] != current) {
+                current = this->colors[i][j];
+                wprintf(ANSI_Colors[this->colors[i][j]]);
+            }
             putwchar(this->canvas[i][j]);
-            // wprintf(ANSI_Colors[Color_Escape]);
         }
     }
+    wprintf(ANSI_Colors[Color_Escape]);
 }
 
 Renderer *createRenderer(int x, int y, int w, int h) {
