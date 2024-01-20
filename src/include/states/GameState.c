@@ -83,13 +83,13 @@ bool GameState_update(State *this, float deltaTime) {
     }
     if (satisfy) {
         for (int i = 0; i < 3; ++i) {
-            if (*(float *)this->slots[i] < SAFETY_TIME || random(0, 100000) > 1) {
+            if (*(float *)this->slots[i] < SAFETY_TIME || randInt(0, 100000) > 1) {
                 continue;
             }
-            Obstacle *obstacle = createObstacle(random(0, Obstacle_Count - 1));
+            Obstacle *obstacle = createObstacle(randInt(0, Obstacle_Count - 1));
             while (unpassables >= 2 && !obstacle->passable) {
                 destroyObstacle(obstacle);
-                obstacle = createObstacle(random(0, Obstacle_Count - 1));
+                obstacle = createObstacle(randInt(0, Obstacle_Count - 1));
             }
             *(float *)this->slots[i] = 0.f;
             obstacle->position = (Vector2f){1.f + (float)ROAD_WIDTH * 0.5f + i * (1.f + ROAD_WIDTH) + GAME_OFFSETX, GAME_OFFSETY};
@@ -115,7 +115,7 @@ bool GameState_update(State *this, float deltaTime) {
         *(float *)this->slots[i + 3] = 0.f;
         for (int j = PickUp_Coin + 1; j < PickUp_Count; ++j) {
             pickup = createPickUp(j, this->globals);
-            if (random(0, pickup->spawnChanceTotal) <= pickup->spawnChance) {
+            if (randInt(0, pickup->spawnChanceTotal) <= pickup->spawnChance) {
                 break;
             }
             destroyPickUp(pickup);
@@ -211,8 +211,8 @@ void GameState_render(const State *this, const Renderer *renderer) {
     runner->render(runner, renderer);
 
     // Render score
-    wchar_t scoreString[15];
-    wsprintfW(scoreString, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
+    wchar_t scoreString[20];
+    swprintf(scoreString, 16, L"   Score: %06d", (int)floor(this->globals->scoreBoard->score));
     position.x = GAME_OFFSETX;
     position.y = GAME_OFFSETY - 3;
     Color color = Color_LightPurple;
@@ -258,7 +258,7 @@ State *createGameState(Globals *globals, StateStack *stack) {
 }
 
 void destroyGameState(State *state) {
-    state->globals->scoreBoard->highScore = max(state->globals->scoreBoard->highScore, (int)floor(state->globals->scoreBoard->score));
+    state->globals->scoreBoard->highScore = fmax(state->globals->scoreBoard->highScore, (int)floor(state->globals->scoreBoard->score));
     destroyRunner(state->slots[6]);
     for (int i = 0; i < 4; ++i) {
         free(state->slots[i]);

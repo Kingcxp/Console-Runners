@@ -18,7 +18,7 @@ void Runner_handleEvent(Runner *this, const int key) {
             // Jump if on ground and not rolling.
             this->jumpVelocity = this->jumpSpeed;
             this->status = Jumping;
-            this->frame = random(0, this->jumpingFrameCount - 1);
+            this->frame = randInt(0, this->jumpingFrameCount - 1);
         } else if (this->status == Rolling) {
             // Should jump immediately after rolling.
             this->readyToJump = true;
@@ -80,7 +80,7 @@ void Runner_update(Runner *this, float deltaTime) {
                 this->readyToJump = false;
                 this->jumpVelocity = this->jumpSpeed;
                 this->status = Jumping;
-                this->frame = random(0, this->jumpingFrameCount - 1);
+                this->frame = randInt(0, this->jumpingFrameCount - 1);
                 this->frame = 0;
                 this->frameTimer = 0.f;
             }
@@ -131,7 +131,7 @@ void Runner_render(const Runner *this, const Renderer *renderer) {
 
 void Runner_die(Runner *this) {
     this->isDead = true;
-    this->frame = random(0, this->deadFrameCount - 1);
+    this->frame = randInt(0, this->deadFrameCount - 1);
 }
 
 void Runner_revive(Runner *this) {

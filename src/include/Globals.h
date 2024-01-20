@@ -44,7 +44,7 @@ typedef struct Globals {
 
 #define outOfBounds(renderer, x, y) ((x) < 0 || (x) >= renderer->width || (y) < 0 || (y) >= renderer->height)
 
-int random(int l, int r) {
+int randInt(int l, int r) {
     return rand() * rand() % (r - l + 1) + l;
 }
 
