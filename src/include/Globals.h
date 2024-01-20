@@ -14,11 +14,23 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <conio.h>
+
+#define ARROW_LEFT 75
+#define ARROW_RIGHT 77
+#define ARROW_UP 72
+#define ARROW_DOWN 80
+#define ENTER 13
 #else
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+
+#define ARROW_LEFT 68
+#define ARROW_RIGHT 67
+#define ARROW_UP 65
+#define ARROW_DOWN 66
+#define ENTER 13
 #endif
 
 #include "basics/Renderer.h"
@@ -72,23 +84,24 @@ int termGetch() {
     #ifdef _WIN32
         return getch();
     #else
-        struct termios oldt, newt;
-        int ch;
-        int flags;
+        struct termios tm, tm_old;
+        int fd = 0, ch;
 
-        tcgetattr(STDIN_FILENO, &oldt);
-        newt = oldt;
-        newt.c_lflag &= ~(ICANON | ECHO);
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        
-        flags = fcntl(STDIN_FILENO, F_GETFL, 0);
-        fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+        if (tcgetattr(fd, &tm) < 0) {
+            return -1;
+        }
+
+        tm_old = tm;
+        cfmakeraw(&tm);
+        if (tcsetattr(fd, TCSANOW, &tm) < 0) {
+            return -1;
+        }
 
         ch = getchar();
-        
-        fcntl(STDIN_FILENO, F_SETFL, flags);
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        
+        if (tcsetattr(fd, TCSANOW, &tm_old) < 0) {
+            return -1;
+        }
+
         return ch;
     #endif
 }

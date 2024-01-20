@@ -11,15 +11,6 @@ typedef enum RunnerStatus {
     Jumping,
 } RunnerStatus;
 
-typedef enum RunnerKeys {
-    GoLeft,
-    GoRight,
-    Jump,
-    Roll,
-    KeyCount,
-} RunnerKeys;
-const int runnerKeyValue[] = {75, 77, 72, 80};
-
 typedef enum RunnerType RunnerType;
 
 typedef struct Runner {

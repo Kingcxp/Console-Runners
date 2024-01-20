@@ -71,7 +71,7 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     state->slots[4] = L"     │┬┘│ │││││││├─ │┬┘└─┐│";
     state->slots[5] = L"     │└┘│─┘│└┘│└┘┴─┘│└┘──┘o";
 
-    ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, 72, 80, 13);
+    ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, ARROW_UP, ARROW_DOWN, ENTER);
     state->slots[6] = buttons;
     buttons->pushButton(buttons, L"Start", MenuState_Button_start);
     buttons->pushButton(buttons, L"Store", MenuState_Button_store);
