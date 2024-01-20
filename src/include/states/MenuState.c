@@ -7,7 +7,7 @@
 #include "../GUI/ButtonGroup.h"
 
 bool MenuState_handleEvent(State *this, const int key) {
-    if (key == ESC) {
+    if (key == QUIT || key == QUIT - 32) {
         this->stack->popState(this->stack);
         return false;
     }
@@ -71,7 +71,7 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     state->slots[4] = L"     ┃┳┛┃ ┃┃┃┃┃┃┃┣━ ┃┳┛┗━┓┃";
     state->slots[5] = L"     ┇┗┛┇━┛┇┗┛┇┗┛┻━┛┇┗┛━━┛o";
 
-    ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, ARROW_UP, ARROW_DOWN, ENTER);
+    ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, UP, DOWN, ENTER);
     state->slots[6] = buttons;
     buttons->pushButton(buttons, L"Start", MenuState_Button_start);
     buttons->pushButton(buttons, L"Store", MenuState_Button_store);

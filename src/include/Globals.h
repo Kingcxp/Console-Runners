@@ -15,24 +15,14 @@
 #include <windows.h>
 #include <conio.h>
 
-#define ARROW_LEFT 75
-#define ARROW_RIGHT 77
-#define ARROW_UP 72
-#define ARROW_DOWN 80
 #define ENTER 13
-#define ESC 113
 #else
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define ARROW_LEFT 68
-#define ARROW_RIGHT 67
-#define ARROW_UP 65
-#define ARROW_DOWN 66
 #define ENTER 10
-#define ESC 113
 
 static struct termios initial_settings, new_settings;
 static int peek_character = -1;
@@ -53,6 +43,12 @@ static int peek_character = -1;
 #define ROAD_LENGTH     16
 #define GAME_OFFSETX    6
 #define GAME_OFFSETY    5
+
+#define LEFT 106
+#define RIGHT 108
+#define UP 105
+#define DOWN 107
+#define QUIT 113
 
 typedef struct Globals {
     Renderer    *renderer;

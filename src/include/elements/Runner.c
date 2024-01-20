@@ -6,14 +6,14 @@ void Runner_handleEvent(Runner *this, const int key) {
     }
 
     // Switching track
-    if (key == ARROW_LEFT && this->targetTrack >= 0) {
+    if ((key == LEFT || key == LEFT - 32) && this->targetTrack >= 0) {
         this->targetTrack -= 1;
-    } else if (key == ARROW_RIGHT && this->targetTrack <= 0) {
+    } else if ((key == RIGHT || key == RIGHT - 32) && this->targetTrack <= 0) {
         this->targetTrack += 1;
     }
 
     // handle vertical operations
-    if (key == ARROW_UP) {
+    if (key == UP || key == UP - 32) {
         if (this->status == Running) {
             // Jump if on ground and not rolling.
             this->jumpVelocity = this->jumpSpeed;
@@ -23,7 +23,7 @@ void Runner_handleEvent(Runner *this, const int key) {
             // Should jump immediately after rolling.
             this->readyToJump = true;
         }
-    } else if (key == ARROW_DOWN) {
+    } else if (key == DOWN || key == DOWN - 32) {
         if (this->status == Running) {
             // Roll if on ground and not jumping.
             this->status = Rolling;

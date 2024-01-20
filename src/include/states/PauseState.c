@@ -7,7 +7,7 @@
 
 
 bool PauseState_handleEvent(State *this, const int key) {
-    if (key == ESC) {
+    if (key == QUIT || key == QUIT - 32) {
         *(float *)this->slots[4] = 3.f;
     }
     
@@ -96,7 +96,7 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     state->render = PauseState_render;
     state->isLowerVisible = true;
 
-    state->slots[0] = createButtonGroup(state, L'>', Color_LightPurple, Color_Yellow, ARROW_UP, ARROW_DOWN, ENTER);
+    state->slots[0] = createButtonGroup(state, L'>', Color_LightPurple, Color_Yellow, UP, DOWN, ENTER);
     ButtonGroup *buttons = state->slots[0];
     buttons->pushButton(buttons, L"Continue", PauseState_Button_continue);
     buttons->pushButton(buttons, L"  Menu  ", PauseState_Button_menu);
