@@ -113,7 +113,7 @@ void initConsole() {
         tcsetattr(0, TCSANOW, &new_settings);
     #endif
     setlocale(LC_ALL, "en_US.UTF-8");
-    printf("\033[?25l\033[H\033[J");
+    wprintf(L"\033[?25l\033[H\033[J");
 }
 
 void endConsole() {
@@ -121,7 +121,7 @@ void endConsole() {
         // close keyboard
         tcsetattr(0, TCSANOW, &initial_settings);
     #endif
-    printf("\033[?25h\033[H\033[J");
+    wprintf(L"\033[?25h\033[H\033[J");
 }
 
 #endif // GLOBALS
