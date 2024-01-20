@@ -63,13 +63,13 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     state->update = MenuState_update;
     state->render = MenuState_render;
 
-    state->slots[0] = L"┏━┓┏━┓┏┓┓┓━┓┏━┓┳  ┳━┓";
-    state->slots[1] = L"┃  ┃ ┃┃┃┃┗━┓┃ ┃┃  ┣━ ";
-    state->slots[2] = L"┗━┛┛━┛┇┗┛━━┛┛━┛┇━┛┻━┛";
+    state->slots[0] = L"┌─┐┌─┐┌┐┐┐─┐┌─┐┬  ┬─┐";
+    state->slots[1] = L"│  │ ││││└─┐│ ││  ├─ ";
+    state->slots[2] = L"└─┘┘─┘│└┘──┘┘─┘│─┘┴─┘";
 
-    state->slots[3] = L"     ┳━┓┳ ┓┏┓┓┏┓┓┳━┓┳━┓┓━┓┓";
-    state->slots[4] = L"     ┃┳┛┃ ┃┃┃┃┃┃┃┣━ ┃┳┛┗━┓┃";
-    state->slots[5] = L"     ┇┗┛┇━┛┇┗┛┇┗┛┻━┛┇┗┛━━┛o";
+    state->slots[3] = L"     ┬─┐┬ ┐┌┐┐┌┐┐┬─┐┬─┐┐─┐┐";
+    state->slots[4] = L"     │┬┘│ │││││││├─ │┬┘└─┐│";
+    state->slots[5] = L"     │└┘│─┘│└┘│└┘┴─┘│└┘──┘o";
 
     ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, 72, 80, 13);
     state->slots[6] = buttons;

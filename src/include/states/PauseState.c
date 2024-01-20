@@ -103,9 +103,9 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     buttons->position.x = GAME_OFFSETX + 4;
     buttons->position.y = GAME_OFFSETY + 7;
     
-    state->slots[1] = L"┳━┓┳━┓┳ ┓┓━┓┳━┓┳━┓┓";
-    state->slots[2] = L"┃━┛┃━┫┃ ┃┗━┓┣━ ┃ ┃┃";
-    state->slots[3] = L"┇  ┛ ┇┇━┛━━┛┻━┛┇━┛o";
+    state->slots[1] = L"┬─┐┬─┐┬ ┐┐─┐┬─┐┬─┐┐";
+    state->slots[2] = L"│─┘│─┤│ │└─┐├─ │ ││";
+    state->slots[3] = L"┆  ┘ ┆┆─┘──┘┴─┘┆─┘o";
 
     state->slots[4] = malloc(sizeof(float));
     *(float *)state->slots[4] = 0.f;
