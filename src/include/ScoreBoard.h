@@ -2,6 +2,8 @@
 #define SCOREBOARD
 
 
+#include <stdbool.h>
+
 typedef struct ScoreBoard {
     // Methods
 

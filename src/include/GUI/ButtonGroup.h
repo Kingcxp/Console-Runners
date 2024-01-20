@@ -37,4 +37,8 @@ typedef struct ButtonGroup {
 ButtonGroup *createButtonGroup(State *state, const wchar_t indicator, const Color indicatorColor, const Color buttonColor, const int prevKey, const int nextKey, const int triggerKey);
 void destroyButtonGroup(ButtonGroup *group);
 
+void Button_back(State *state) {
+    state->stack->popState(state->stack);
+}
+
 #endif // BUTTON_GROUP

@@ -35,6 +35,11 @@ void MenuState_render(const State *this, const Renderer *renderer) {
 
     // Render buttons
     ((ButtonGroup *)this->slots[0])->render(this->slots[0], renderer);
+
+    // Render Tips
+    position.x = 2, position.y = 21;
+    color = Color_LightBlue;
+    renderer->renderStringAt(renderer, L"↑/↓: Select, Enter: Confirm", &color, &position, true);
 }
 
 void MenuState_Button_start(State *state) {
@@ -46,11 +51,7 @@ void MenuState_Button_store(State *state) {
 }
 
 void MenuState_Button_info(State *state) {
-    // TODO: Add info state.
-}
-
-void MenuStaet_Button_quit(State *state) {
-    state->stack->popState(state->stack);
+    state->stack->pushState(state->stack, InfoState);
 }
 
 State *createMenuState(Globals *globals, StateStack *stack) {
@@ -68,8 +69,8 @@ State *createMenuState(Globals *globals, StateStack *stack) {
     buttons->pushButton(buttons, L"Start", MenuState_Button_start);
     buttons->pushButton(buttons, L"Store", MenuState_Button_store);
     buttons->pushButton(buttons, L"Info", MenuState_Button_info);
-    buttons->pushButton(buttons, L"Quit", MenuStaet_Button_quit);
-    buttons->position.y = 13;
+    buttons->pushButton(buttons, L"Quit", Button_back);
+    buttons->position.y = 12;
     buttons->position.x = 11;
 
     return state;
