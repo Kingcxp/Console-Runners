@@ -35,18 +35,18 @@ bool ReviveState_update(State *this, float deltaTime) {
 
 void ReviveState_render(const State *this, const Renderer *renderer) {
     Vector2i position;
-    Color color = Color_LightGreen;
-    position.x = GAME_OFFSETX, position.y = GAME_OFFSETY + 1;
+    Color color = Color_Green;
+    position.x = GAME_OFFSETX - 1, position.y = GAME_OFFSETY;
     
     // Render title
-    for (int i = 3; i <= 5; ++i) {
-        renderer->renderStringAt(renderer, this->slots[i], &color, &position, true);
-        position.y += 1;
-    }
+    renderer->renderStringAt(renderer, L"                     ", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L"┳ ┳┳━┓┳  ┳━┓  ┏┏┓┳━┓┓", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L"┃━┫┣━ ┃  ┃━┛  ┃┃┃┣━ ┃", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L"┇ ┻┻━┛┇━┛┇    ┛ ┇┻━┛o", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L"                     ", &color, &position, true); position.y += 1;
 
     // Render border and inner space
-    position.y += 1;
-    position.x += 2;
+    position.x += 3;
     color = Color_LightGreen;
     renderer->renderStringAt(renderer, L"╔════════════╗", &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, L"║            ║", &color, &position, true); position.y += 1;
@@ -100,9 +100,6 @@ State *createReviveState(Globals *globals, StateStack *stack) {
     state->slots[0] = malloc(sizeof(float));
     state->slots[1] = createProgressBar(Color_LightRed, 12, 3, 3.f, 3.f);
     state->slots[2] = createButtonGroup(state, L'>', Color_Green, Color_Yellow, UP, DOWN, ENTER);
-    state->slots[3] = L"┳ ┳┳━┓┳  ┳━┓  ┏┏┓┳━┓┓";
-    state->slots[4] = L"┃━┫┣━ ┃  ┃━┛  ┃┃┃┣━ ┃";
-    state->slots[5] = L"┇ ┻┻━┛┇━┛┇    ┛ ┇┻━┛o";
 
     ButtonGroup *buttons = (ButtonGroup *)state->slots[2];
     ProgressBar *bar = (ProgressBar *)state->slots[1];

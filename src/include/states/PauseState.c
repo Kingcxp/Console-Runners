@@ -8,10 +8,10 @@
 
 bool PauseState_handleEvent(State *this, const int key) {
     if (key == QUIT || key == QUIT - 32) {
-        *(float *)this->slots[4] = 3.f;
+        *(float *)this->slots[1] = 3.f;
     }
     
-    if (*(float *)this->slots[4] == 0.f) {
+    if (*(float *)this->slots[1] == 0.f) {
         ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
     }
 
@@ -19,10 +19,10 @@ bool PauseState_handleEvent(State *this, const int key) {
 }
 
 bool PauseState_update(State *this, float deltaTime) {
-    if (*(float *)this->slots[4] > 0.f) {
-        *(float *)this->slots[4] -= deltaTime;
-        if (*(float *)this->slots[4] <= 0.f) {
-            *(float *)this->slots[4] = 0.f;
+    if (*(float *)this->slots[1] > 0.f) {
+        *(float *)this->slots[1] -= deltaTime;
+        if (*(float *)this->slots[1] <= 0.f) {
+            *(float *)this->slots[1] = 0.f;
             this->stack->popState(this->stack);
         }
     }
@@ -32,17 +32,17 @@ bool PauseState_update(State *this, float deltaTime) {
 void PauseState_render(const State *this, const Renderer *renderer) {
     Vector2i position;
     Color color = Color_Green;
-    position.x = GAME_OFFSETX, position.y = GAME_OFFSETY + 1;
+    position.x = GAME_OFFSETX - 1, position.y = GAME_OFFSETY;
     
     // Render title
-    for (int i = 1; i <= 3; ++i) {
-        renderer->renderStringAt(renderer, this->slots[i], &color, &position, true);
-        position.y += 1;
-    }
+    renderer->renderStringAt(renderer, L"                     ", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L" ┳━┓┳━┓┳ ┓┓━┓┳━┓┳━┓┓ ", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L" ┃━┛┃━┫┃ ┃┗━┓┣━ ┃ ┃┃ ", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L" ┇  ┛ ┇┇━┛━━┛┻━┛┇━┛o ", &color, &position, true); position.y += 1;
+    renderer->renderStringAt(renderer, L"                     ", &color, &position, true); position.y += 1;
 
     // Render border and inner space
-    position.y += 1;
-    position.x += 2;
+    position.x += 3;
     color = Color_LightBlue;
     renderer->renderStringAt(renderer, L"╔════════════╗", &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, L"║            ║", &color, &position, true); position.y += 1;
@@ -53,13 +53,13 @@ void PauseState_render(const State *this, const Renderer *renderer) {
     renderer->renderStringAt(renderer, L"╚════════════╝", &color, &position, true);
 
     // Render buttons or countdown
-    if (*(float *)this->slots[4] == 0.f) {
+    if (*(float *)this->slots[1] == 0.f) {
         ((ButtonGroup *)this->slots[0])->render(this->slots[0], renderer);
     } else {
         color = Color_Red;
         position.y -= 4;
         position.x += 6;
-        int current = (int)ceil(*(float *)this->slots[4]);
+        int current = (int)ceil(*(float *)this->slots[1]);
         if (current == 1) {
             renderer->renderStringAt(renderer, L" ┫ ", &color, &position, true); position.y += 1;
             renderer->renderStringAt(renderer, L" ┃ ", &color, &position, true); position.y += 1;
@@ -77,7 +77,7 @@ void PauseState_render(const State *this, const Renderer *renderer) {
 }
 
 void PauseState_Button_continue(State *state) {
-    *(float *)state->slots[4] = 3.f;
+    *(float *)state->slots[1] = 3.f;
 }
 
 void PauseState_Button_menu(State *state) {
@@ -101,19 +101,15 @@ State *createPauseState(Globals *globals, StateStack *stack) {
     buttons->pushButton(buttons, L"  Menu  ", PauseState_Button_menu);
     buttons->position.x = GAME_OFFSETX + 4;
     buttons->position.y = GAME_OFFSETY + 7;
-    
-    state->slots[1] = L"┳━┓┳━┓┳ ┓┓━┓┳━┓┳━┓┓";
-    state->slots[2] = L"┃━┛┃━┫┃ ┃┗━┓┣━ ┃ ┃┃";
-    state->slots[3] = L"┇  ┛ ┇┇━┛━━┛┻━┛┇━┛o";
 
-    state->slots[4] = malloc(sizeof(float));
-    *(float *)state->slots[4] = 0.f;
+    state->slots[1] = malloc(sizeof(float));
+    *(float *)state->slots[1] = 0.f;
 
     return state;
 }
 
 void destroyPauseState(State *state) {
-    free(state->slots[4]);
+    free(state->slots[1]);
     destroyButtonGroup(state->slots[0]);
 
     free(state);
