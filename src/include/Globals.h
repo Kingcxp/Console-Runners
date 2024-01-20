@@ -64,7 +64,10 @@ typedef struct Globals {
 #define outOfBounds(renderer, x, y) ((x) < 0 || (x) >= renderer->width || (y) < 0 || (y) >= renderer->height)
 
 int randInt(int l, int r) {
-    return rand() * rand() % (r - l + 1) + l;
+    if (RAND_MAX <= 0x7fff) {
+        return rand() * rand() % (r - l + 1) + l;
+    }
+    return rand() % (r - l + 1) + l;
 }
 
 int keyboardHit() {
