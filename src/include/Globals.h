@@ -14,6 +14,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <conio.h>
+
+#define VERSION L"v1.14.514 (Windows x64 Build)"
 #else
 #include <termios.h>
 #include <fcntl.h>
@@ -22,14 +24,14 @@
 
 static struct termios initial_settings, new_settings;
 static int peek_character = -1;
+
+#define VERSION L"v1.14.514 (Linux x64 Build)"
 #endif
 
 #include "basics/Renderer.h"
 #include "ScoreBoard.h"
 
 #define TITLE L" Console Runners! "
-#define AUTHOR L"By Kingcq"
-#define VERSION L"v1.14.514"
 #define COPYRIGHT L" Copyright @ 2024 Kingcq "
 
 #define RENDER_WIDTH    31
@@ -108,7 +110,7 @@ void initConsole() {
         tcsetattr(0, TCSANOW, &new_settings);
     #endif
     setlocale(LC_ALL, "en_US.UTF-8");
-    wprintf(L"\033[?25l\033[H\033[J");
+    wprintf(L"\033[?25l\033[1;1H\033[2J");
 }
 
 void endConsole() {
@@ -116,7 +118,7 @@ void endConsole() {
         // close keyboard
         tcsetattr(0, TCSANOW, &initial_settings);
     #endif
-    wprintf(L"\033[?25h\033[H\033[J");
+    wprintf(L"\033[?25h\033[1;1H\033[2J");
 }
 
 #endif // GLOBALS
