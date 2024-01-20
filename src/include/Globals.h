@@ -30,7 +30,7 @@
 #define ARROW_RIGHT 67
 #define ARROW_UP 65
 #define ARROW_DOWN 66
-#define ENTER 13
+#define ENTER 10
 #endif
 
 #include "basics/Renderer.h"
