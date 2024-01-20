@@ -15,12 +15,24 @@
 #include <windows.h>
 #include <conio.h>
 
+#define LEFT 75
+#define RIGHT 77
+#define UP 72
+#define DOWN 80
+#define ENTER 13
+
 #define VERSION L"v1.14.514 (Windows x64 Build)"
 #else
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+
+#define LEFT 68
+#define RIGHT 67
+#define UP 65
+#define DOWN 66
+#define ENTER 10
 
 static struct termios initial_settings, new_settings;
 static int peek_character = -1;
@@ -42,12 +54,7 @@ static int peek_character = -1;
 #define GAME_OFFSETX    6
 #define GAME_OFFSETY    5
 
-#define LEFT 106
-#define RIGHT 108
-#define UP 105
-#define DOWN 107
 #define QUIT 113
-#define ENTER 32
 
 typedef struct Globals {
     Renderer    *renderer;
