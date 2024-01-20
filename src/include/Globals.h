@@ -31,6 +31,9 @@
 #define ARROW_UP 65
 #define ARROW_DOWN 66
 #define ENTER 10
+
+static struct termios initial_settings, new_settings;
+static int peek_character = -1;
 #endif
 
 #include "basics/Renderer.h"
@@ -64,19 +67,21 @@ int keyboardHit() {
     #ifdef _WIN32
         return kbhit();
     #else
-        struct termios term;
-        tcgetattr(0, &term);
-
-        struct termios term2 = term;
-        term2.c_lflag &= ~ICANON;
-        tcsetattr(0, TCSANOW, &term2);
-
-        int byteswaiting;
-        ioctl(0, FIONREAD, &byteswaiting);
-
-        tcsetattr(0, TCSANOW, &term);
-
-        return byteswaiting > 0;
+        char ch;
+        int nread;
+        if(peek_character != -1) {
+            return 1;
+        }
+        new_settings.c_cc[VMIN]=0;
+        tcsetattr(0, TCSANOW, &new_settings);
+        nread = read(0,&ch,1);
+        new_settings.c_cc[VMIN]=1;
+        tcsetattr(0, TCSANOW, &new_settings);
+        if(nread == 1) {
+            peek_character = ch;
+            return 1;
+        }
+        return 0;
     #endif
 }
 
@@ -84,34 +89,38 @@ int termGetch() {
     #ifdef _WIN32
         return getch();
     #else
-        struct termios tm, tm_old;
-        int fd = 0, ch;
-
-        if (tcgetattr(fd, &tm) < 0) {
-            return -1;
+        char ch;
+        if(peek_character != -1) {
+            ch = peek_character;
+            peek_character = -1;
+            return ch;
         }
-
-        tm_old = tm;
-        cfmakeraw(&tm);
-        if (tcsetattr(fd, TCSANOW, &tm) < 0) {
-            return -1;
-        }
-
-        ch = getchar();
-        if (tcsetattr(fd, TCSANOW, &tm_old) < 0) {
-            return -1;
-        }
-
+        read(0,&ch,1);
         return ch;
     #endif
 }
 
 void initConsole() {
+    #ifndef _WIN32
+        // init keyboard
+        tcgetattr(0,&initial_settings);
+        new_settings = initial_settings;
+        new_settings.c_lflag &= ~ICANON;
+        new_settings.c_lflag &= ~ECHO;
+        new_settings.c_lflag &= ~ISIG;
+        new_settings.c_cc[VMIN] = 1;
+        new_settings.c_cc[VTIME] = 0;
+        tcsetattr(0, TCSANOW, &new_settings);
+    #endif
     setlocale(LC_ALL, "en_US.UTF-8");
     printf("\033[?25l\033[H\033[J");
 }
 
 void endConsole() {
+    #ifndef _WIN32
+        // close keyboard
+        tcsetattr(0, TCSANOW, &initial_settings);
+    #endif
     printf("\033[?25h\033[H\033[J");
 }
 
