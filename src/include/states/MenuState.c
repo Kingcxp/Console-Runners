@@ -23,12 +23,12 @@ bool MenuState_update(State *this, float deltaTime) {
 void MenuState_render(const State *this, const Renderer *renderer) {
     // Render title
     Vector2i position;
-    Color color = Color_RedBlink;
+    Color color = Color_Red;
     position.x = 2, position.y = 3;
     renderer->renderStringAt(renderer, this->slots[0], &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, this->slots[1], &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, this->slots[2], &color, &position, true); position.y += 2;
-    color = Color_BlueBlink;
+    color = Color_Blue;
     renderer->renderStringAt(renderer, this->slots[3], &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, this->slots[4], &color, &position, true); position.y += 1;
     renderer->renderStringAt(renderer, this->slots[5], &color, &position, true);

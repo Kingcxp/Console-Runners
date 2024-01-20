@@ -31,7 +31,7 @@ bool PauseState_update(State *this, float deltaTime) {
 
 void PauseState_render(const State *this, const Renderer *renderer) {
     Vector2i position;
-    Color color = Color_GreenBlink;
+    Color color = Color_Green;
     position.x = GAME_OFFSETX, position.y = GAME_OFFSETY - 2;
     
     // Render title
@@ -57,7 +57,7 @@ void PauseState_render(const State *this, const Renderer *renderer) {
     if (*(float *)this->slots[4] == 0.f) {
         ((ButtonGroup *)this->slots[0])->render(this->slots[0], renderer);
     } else {
-        color = Color_RedBlink;
+        color = Color_Red;
         position.y -= 4;
         position.x += 6;
         int current = (int)ceil(*(float *)this->slots[4]);
