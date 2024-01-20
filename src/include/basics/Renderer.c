@@ -44,13 +44,13 @@ void Renderer_clear(const Renderer *this) {
 void Renderer_display(const Renderer *this) {
     Color current = Color_Escape;
     for (int i = 0; i < this->height; ++i) {
-        setCursor(this->x, this->y + i);
         for (int j = 0; j < this->width; ++j) {
             if (this->canvas[i][j] == this->lastCanvas[i][j] && this->colors[i][j] == this->lastColors[i][j]) {
                 continue;
             }
             this->lastCanvas[i][j] = this->canvas[i][j];
             this->lastColors[i][j] = this->colors[i][j];
+            setCursor(this->x + j, this->y + i);
             if (this->colors[i][j] != current) {
                 current = this->colors[i][j];
                 wprintf(ANSI_Colors[this->colors[i][j]]);
