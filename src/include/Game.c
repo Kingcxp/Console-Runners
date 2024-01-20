@@ -76,7 +76,6 @@ Game *createGame() {
 void destroyGame(Game *game) {
     // free game objects
     endConsole();
-    setlocale(LC_ALL, "");
     destroyStateStack(game->stack);
     destroyRenderer(game->globals.renderer);
     destroyScoreBoard(game->globals.scoreBoard);

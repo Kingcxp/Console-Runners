@@ -119,7 +119,7 @@ void initConsole() {
         new_settings.c_cc[VTIME] = 0;
         tcsetattr(0, TCSANOW, &new_settings);
     #endif
-    setlocale(LC_ALL, "en_US.UTF-8");
+    _wsetlocale(LC_ALL, L"en_US.UTF-8");
     wprintf(L"\033[?25l\033[1;1H\033[2J");
 }
 
@@ -128,6 +128,7 @@ void endConsole() {
         // close keyboard
         tcsetattr(0, TCSANOW, &initial_settings);
     #endif
+    _wsetlocale(LC_ALL, "");
     wprintf(L"\033[?25h\033[1;1H\033[2J");
 }
 
