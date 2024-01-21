@@ -266,7 +266,7 @@ const short TR_deadFrameCount = 1;
 
 const float TR_jumpSpeed = 18.f;
 const float TR_gravity = 26.f;
-const float TR_switchTrackSpeed = 24.f;
+const float TR_switchTrackSpeed = 30.f;
 const float TR_runningSpeed = 16.f;
 const wchar_t *TR_name = L"Triangle Runner";
 const wchar_t *TR_description = L"Triangle makes power";

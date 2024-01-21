@@ -131,7 +131,6 @@ void endConsole() {
         // close keyboard
         tcsetattr(0, TCSANOW, &initial_settings);
     #endif
-    setlocale(LC_ALL, "");
     wprintf(L"\033[?25h\033[1;1H\033[2J");
 }
 

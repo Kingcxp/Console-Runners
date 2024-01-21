@@ -53,6 +53,7 @@ bool GameState_update(State *this, float deltaTime) {
         this->globals->scoreBoard->reviveTimer -= deltaTime;
         if (this->globals->scoreBoard->reviveTimer <= 0.f) {
             this->globals->scoreBoard->reviveTimer = 0.f;
+            this->globals->scoreBoard->save(this->globals->scoreBoard);
             this->stack->pushState(this->stack, ReviveState);
             return false;
         }
@@ -147,7 +148,7 @@ bool GameState_update(State *this, float deltaTime) {
                 break;
             }
         }
-        if (!pickup) {
+        if (pickup) {
             destroyPickUp(pickup);
         }
     }
@@ -280,17 +281,19 @@ State *createGameState(Globals *globals, StateStack *stack) {
 
 void destroyGameState(State *state) {
     destroyRunner(state->slots[6]);
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 6; ++i) {
         free(state->slots[i]);
     }
     for (int i = 7; i * 2 < STATE_SLOTS; ++i) {
         if (state->slots[i]) {
             destroyObstacle(state->slots[i]);
+            state->slots[i] = NULL;
         }
     }
     for (int i = STATE_SLOTS / 2; i < STATE_SLOTS; ++i) {
         if (state->slots[i]) {
             destroyPickUp(state->slots[i]);
+            state->slots[i] = NULL;
         }
     }
 
