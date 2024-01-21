@@ -268,5 +268,9 @@ const float BR_jumpSpeed = 15.f;
 const float BR_gravity = 26.f;
 const float BR_switchTrackSpeed = 24.f;
 const float BR_runningSpeed = 10.f;
+const wchar_t *BR_name = L"Basical Runner";
+const wchar_t *BR_description = L"Classic style";
+const wchar_t *BR_comment = L"\"It looks quite dumb.\"";
+const int BR_price = 0;
 
 #endif // RUNNER_BASICAL

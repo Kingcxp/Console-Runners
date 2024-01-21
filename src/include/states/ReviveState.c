@@ -83,7 +83,7 @@ void ReviveState_Button_Confirm(State *state) {
     state->globals->scoreBoard->coins -= REVIVE_COST(state);
     state->globals->scoreBoard->revivedTimes += 1;
     state->globals->scoreBoard->isInvincible = true;
-    state->globals->scoreBoard->invincibleTimer = 3.f;
+    state->globals->scoreBoard->invincibleTimer = 5.f;
     state->stack->popState(state->stack);
 }
 
@@ -98,7 +98,7 @@ State *createReviveState(Globals *globals, StateStack *stack) {
     state->isLowerVisible = true;
 
     state->slots[0] = malloc(sizeof(float));
-    state->slots[1] = createProgressBar(Color_LightRed, 12, 3, 3.f, 3.f);
+    state->slots[1] = createProgressBar(Color_LightRed, 12, 3, 5.f, 5.f);
     state->slots[2] = createButtonGroup(state, L'>', Color_Green, Color_Yellow, UP, DOWN, ENTER);
 
     ButtonGroup *buttons = (ButtonGroup *)state->slots[2];
@@ -106,7 +106,7 @@ State *createReviveState(Globals *globals, StateStack *stack) {
     buttons->pushButton(buttons, L"Confirm!", ReviveState_Button_Confirm);
     buttons->position.x = GAME_OFFSETX + 4;
     buttons->position.y = GAME_OFFSETY + 8;
-    *(float *)state->slots[0] = 3.f;
+    *(float *)state->slots[0] = 5.f;
     bar->follow = state->slots[0];
     bar->position.x = GAME_OFFSETX + 3;
     bar->position.y = GAME_OFFSETY + 10;

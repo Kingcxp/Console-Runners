@@ -5,10 +5,12 @@
 #include "../../elements/PickUp.h"
 #include "Coin.h"
 #include "Invincible.h"
+#include "SuperCoin.h"
 
 typedef enum PickUpType {
     PickUp_Coin,
     PickUp_Invincible,
+    PickUp_SuperCoin,
     PickUp_Count,
     // TODO: Register more pickups.
 } PickUpType;
@@ -29,6 +31,14 @@ void setPickUp(PickUp *pickup, PickUpType type) {
         pickup->spawnChance = 2,
         pickup->spawnChanceTotal = 100;
         pickup->takeEffect = Invincible_takeEffect;
+    } else if (type == PickUp_SuperCoin) {
+        pickup->frame = SuperCoin_frame;
+        pickup->colors = SuperCoin_colors;
+        pickup->collisionBox = SuperCoin_collisionBox;
+        pickup->height = SuperCoin_height;
+        pickup->spawnChance = 1,
+        pickup->spawnChanceTotal = 100;
+        pickup->takeEffect = SuperCoin_takeEffect;
     }
 }
 

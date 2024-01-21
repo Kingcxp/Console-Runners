@@ -7,13 +7,13 @@
 
 
 bool PauseState_handleEvent(State *this, const int key) {
+    if (*(float *)this->slots[1] != 0.f) {
+        return false;
+    }
     if (key == QUIT || key == QUIT - 32) {
         *(float *)this->slots[1] = 3.f;
     }
-    
-    if (*(float *)this->slots[1] == 0.f) {
-        ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
-    }
+    ((ButtonGroup *)this->slots[0])->handleEvent(this->slots[0], key);
 
     return false;
 }

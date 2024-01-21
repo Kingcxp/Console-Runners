@@ -1,5 +1,7 @@
 #include "../resources/runners/RunnerList.h"
 
+#define BLINK_INTERVAL 0.2f
+
 void Runner_handleEvent(Runner *this, const int key) {
     if (this->isDead) {
         return;
@@ -37,6 +39,17 @@ void Runner_handleEvent(Runner *this, const int key) {
 }
 
 void Runner_update(Runner *this, float deltaTime) {
+    // Update invincible
+    if (this->isInvincible && *this->isInvincible) {
+        this->invincibleVisualTimer += deltaTime;
+        if (this->invincibleVisualTimer >= BLINK_INTERVAL) {
+            this->invincibleVisualTimer -= BLINK_INTERVAL;
+            this->visible ^= true;
+        }
+    } else {
+        this->visible = true;
+    }
+
     // Switching track
     float targetX = this->targetTrack * (1.f + ROAD_WIDTH);
     if (this->trackDelta > targetX) {
@@ -101,6 +114,9 @@ void Runner_update(Runner *this, float deltaTime) {
 }
 
 void Runner_render(const Runner *this, const Renderer *renderer) {
+    if (!this->visible) {
+        return;
+    }
     Vector2i position;
     position.x = floor(this->position.x + this->trackDelta) - 1, position.y = floor(this->position.y + this->jumpDelta) - 3;
     for (int i = 0; i < 4; ++i) {
@@ -187,6 +203,9 @@ Runner *createRunner(const RunnerType type) {
     runner->revive = Runner_revive;
     runner->getCollisionRect = Runner_getCollisionRect;
     runner->getCollisionChar = Runner_getCollisionChar;
+    runner->visible = true;
+    runner->invincibleVisualTimer = 0.f;
+    runner->isInvincible = NULL;
 
     setRunner(runner, type);
 

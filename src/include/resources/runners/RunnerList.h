@@ -11,6 +11,11 @@ typedef enum RunnerType {
     // TODO: Register more runners.
 } RunnerType;
 
+const wchar_t *runnerNames[Runner_Count];
+const wchar_t *runnerDescriptions[Runner_Count];
+const wchar_t *runnerComments[Runner_Count];
+int runnerPrices[Runner_Count];
+
 void setRunner(Runner *runner, RunnerType type) {
     if (type == Runner_Basical) {
         runner->runningFrames = BR_runningFrames;
@@ -39,6 +44,11 @@ void setRunner(Runner *runner, RunnerType type) {
 
         runner->switchTrackSpeed = BR_switchTrackSpeed;
         runner->runningSpeed = BR_runningSpeed;
+
+        runnerNames[Runner_Basical] = BR_name;
+        runnerDescriptions[Runner_Basical] = BR_description;
+        runnerComments[Runner_Basical] = BR_comment;
+        runnerPrices[Runner_Basical] = BR_price;
     }
 }
 

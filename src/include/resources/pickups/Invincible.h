@@ -4,7 +4,7 @@
 
 #include "../../elements/PickUp.h"
 
-#define INVINCIBLE_TIME 3.f
+#define INVINCIBLE_TIME 5.f
 
 const wchar_t Invincible_frame[3][6] = {
     L" /▼\\ ",

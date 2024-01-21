@@ -247,9 +247,10 @@ State *createGameState(Globals *globals, StateStack *stack) {
     state->update = GameState_update;
     state->render = GameState_render;
     
-    Runner *runner = createRunner(Runner_Basical);
+    Runner *runner = createRunner(state->globals->scoreBoard->runnerIndex);
     runner->status = Running;
     runner->position = (Vector2f){2.f + (float)ROAD_WIDTH * 1.5f + GAME_OFFSETX, (float)ROAD_LENGTH - 0.5f + GAME_OFFSETY};
+    runner->isInvincible = &state->globals->scoreBoard->isInvincible;
     state->slots[6] = runner;
 
     for (int i = 0; i < 3; ++i) {

@@ -9,19 +9,23 @@ typedef struct ScoreBoard {
 
     // Variables
 
-    int     coins,
-            highScore;
+    int         coins,
+                highScore;
+
+    short       runnerIndex;
+    
+    bool        *runnerUnlocked;
 
     // In-game variables
 
     // GameState variables
 
-    float   score;
-    bool    isInvincible;
-    float   invincibleTimer,
-            reviveTimer;
-    int     lastRevivedTimes,
-            revivedTimes;
+    float       score;
+    bool        isInvincible;
+    float       invincibleTimer,
+                reviveTimer;
+    int         lastRevivedTimes,
+                revivedTimes;
 } ScoreBoard;
 
 ScoreBoard *createScoreBoard();

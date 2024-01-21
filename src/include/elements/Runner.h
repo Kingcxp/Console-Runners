@@ -45,7 +45,10 @@ typedef struct Runner {
 
     bool                readyToRoll,
                         readyToJump,
-                        isDead;
+                        isDead,
+                        visible;
+    
+    bool                *isInvincible;
 
     const char          (*runningCollisionBox)[4][4],
                         (*rollingCollisionBox)[4][4],
@@ -66,7 +69,8 @@ typedef struct Runner {
                         trackDelta,
                         switchTrackSpeed,
                         runningSpeed,
-                        frameTimer;
+                        frameTimer,
+                        invincibleVisualTimer;
 
     Vector2f            position;
     

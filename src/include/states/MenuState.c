@@ -47,7 +47,7 @@ void MenuState_Button_start(State *state) {
 }
 
 void MenuState_Button_store(State *state) {
-    // TODO: Add store state.
+    state->stack->pushState(state->stack, StoreState);
 }
 
 void MenuState_Button_info(State *state) {
