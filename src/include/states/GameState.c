@@ -40,6 +40,13 @@ bool GameState_update(State *this, float deltaTime) {
     Runner *runner = this->slots[6];
     runner->update(runner, deltaTime);
 
+    // Special for final runner
+    if (this->globals->scoreBoard->runnerIndex == Runner_Final) {
+        runner->visible = true;
+        this->globals->scoreBoard->isInvincible = true;
+        this->globals->scoreBoard->invincibleTimer = 1024.f;
+    }
+
     // Handle revive
     if (this->globals->scoreBoard->reviveTimer > 0.f && runner->isDead) {
         this->globals->scoreBoard->reviveTimer -= deltaTime;

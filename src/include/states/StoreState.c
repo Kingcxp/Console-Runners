@@ -17,6 +17,8 @@ bool StoreState_handleEvent(State *this, const int key) {
         runner->handleEvent(runner, key);    
     }
 
+    ((ButtonGroup *)this->slots[2])->handleEvent(this->slots[2], key);
+
     RunnerType *index = this->slots[1];
     if (key == LEFT && *index > Runner_Basical) {
         *index -= 1;
@@ -158,7 +160,7 @@ State *createStoreState(Globals *globals, StateStack *stack) {
     ButtonGroup *buttons = createButtonGroup(state, L'>', Color_Yellow, Color_Green, UP, DOWN, ENTER);
     buttons->pushButton(buttons, L"Buy!", StoreState_Button_buy);
     buttons->position.y = 19;
-    buttons->position.x = 11;
+    buttons->position.x = 10;
     state->slots[2] = buttons;
 
     return state;
