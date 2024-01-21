@@ -82,10 +82,10 @@ int keyboardHit() {
         if(peek_character != -1) {
             return 1;
         }
-        new_settings.c_cc[VMIN]=0;
+        new_settings.c_cc[VMIN] = 0;
         tcsetattr(0, TCSANOW, &new_settings);
-        nread = read(0,&ch,1);
-        new_settings.c_cc[VMIN]=1;
+        nread = read(0, &ch, 1);
+        new_settings.c_cc[VMIN] = 1;
         tcsetattr(0, TCSANOW, &new_settings);
         if(nread == 1) {
             peek_character = ch;
@@ -105,7 +105,7 @@ int termGetch() {
             peek_character = -1;
             return ch;
         }
-        read(0,&ch,1);
+        read(0, &ch, 1);
         return ch;
     #endif
 }
@@ -113,7 +113,7 @@ int termGetch() {
 void initConsole() {
     #ifndef _WIN32
         // init keyboard
-        tcgetattr(0,&initial_settings);
+        tcgetattr(0, &initial_settings);
         new_settings = initial_settings;
         new_settings.c_lflag &= ~ICANON;
         new_settings.c_lflag &= ~ECHO;
