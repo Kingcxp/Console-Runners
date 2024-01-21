@@ -12,14 +12,6 @@ This project aims to learn more about features of C and how to make a game using
 
 Any feedback on this project would be appreciated.
 
-## ScreenShots
-
-![game](screenshots/README/game.png)
-![game](screenshots/README/menu.png)
-![game](screenshots/README/paused.png)
-![game](screenshots/README/revive.png)
-![game](screenshots/README/store.png)
-
 ## Features
 
 - 🚀 Lightweight and runs extremely smooth
@@ -39,7 +31,7 @@ Any feedback on this project would be appreciated.
 ## Installation
 Clone this project:
 ```sh
-git clone https://git.nju.edu.cn/Kingcq/console-subway-surfers.git ConsoleRunners/
+git clone https://github.com/Kingcxp/Console-Runners.git ConsoleRunners/
 ```
 Enter the project source file directory:
 ```sh
@@ -92,3 +84,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## ScreenShots
+
+![game](screenshots/README/game.png)
+![game](screenshots/README/menu.png)
+![game](screenshots/README/paused.png)
+![game](screenshots/README/revive.png)
+![game](screenshots/README/store.png)
