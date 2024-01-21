@@ -7,15 +7,14 @@
 typedef struct ScoreBoard {
     // Methods
 
-    void        save(const struct ScoreBoard *this);
-    void        load(struct ScoreBoard *this);
+    void        (*save)(const struct ScoreBoard *this);
+    void        (*load)(struct ScoreBoard *this);
 
     // Variables
 
     int         coins,
-                highScore;
-
-    short       runnerIndex;
+                highScore,
+                runnerIndex;
     
     bool        *runnerUnlocked;
 

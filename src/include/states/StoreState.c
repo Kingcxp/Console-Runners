@@ -9,6 +9,7 @@
 bool StoreState_handleEvent(State *this, const int key) {
     if (key == QUIT || key == QUIT - 32) {
         this->stack->popState(this->stack);
+        this->globals->scoreBoard->save(this->globals->scoreBoard);
         return false;
     }
 
@@ -136,7 +137,6 @@ void StoreState_Button_buy(State *state) {
     } else if (state->globals->scoreBoard->coins >= runnerPrices[*index]) {
         state->globals->scoreBoard->coins -= runnerPrices[*index];
         state->globals->scoreBoard->runnerUnlocked[*index] = true;
-        this->globals->scoreBoard->save(this->globals->scoreBoard);
     }
 }
 

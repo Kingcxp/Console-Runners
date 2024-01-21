@@ -226,7 +226,7 @@ void GameState_render(const State *this, const Renderer *renderer) {
 
     // Render score
     wchar_t hiscoreString[25], scoreString[25], coinString[25];
-    swprintf(hiscoreString, 24, L" HiScore: %06d   ", (int)floor(this->globals->scoreBoard->score));
+    swprintf(hiscoreString, 24, L" HiScore: %06d   ", (int)floor(this->globals->scoreBoard->highScore));
     swprintf(scoreString, 24, L"   Score: %06d   ", (int)floor(this->globals->scoreBoard->score));
     swprintf(coinString, 24, L"   Coins: %06d   ", (int)floor(this->globals->scoreBoard->coins));
     position.x = GAME_OFFSETX;

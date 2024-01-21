@@ -2,13 +2,13 @@
 #include "resources/runners/RunnerList.h"
 
 void ScoreBoard_save(const ScoreBoard *this) {
-    FILE *outFile = fopen("save.dat", "r");
+    FILE *outFile = fopen("save.dat", "w");
     fprintf(outFile, "%d %d %d\n", this->coins, this->highScore, this->runnerIndex);
     for (int i = 0; i < Runner_Count; ++i) {
         if (i == Runner_Count - 1) {
-            fprintf("%d\n", this->runnerUnlocked[i]);
+            fprintf(outFile, "%d\n", this->runnerUnlocked[i]);
         } else {
-            fprintf("%d ", this->runnerUnlocked[i]);
+            fprintf(outFile, "%d ", this->runnerUnlocked[i]);
         }
     }
     fclose(outFile);
@@ -16,7 +16,8 @@ void ScoreBoard_save(const ScoreBoard *this) {
 
 void ScoreBoard_load(ScoreBoard *this) {
     FILE *inFile = fopen("save.dat", "r");
-    if (!inFile) {
+    if (inFile == NULL) {
+        this->save(this);
         return;
     }
     fscanf(inFile, "%d%d%d", &this->coins, &this->highScore, &this->runnerIndex);
@@ -41,7 +42,6 @@ ScoreBoard *createScoreBoard() {
     }
     scoreBoard->runnerUnlocked[0] = true;
     scoreBoard->load(scoreBoard);
-    scoreBoard->save(scoreBoard);
 
     return scoreBoard;
 }
