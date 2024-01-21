@@ -136,6 +136,7 @@ void StoreState_Button_buy(State *state) {
     } else if (state->globals->scoreBoard->coins >= runnerPrices[*index]) {
         state->globals->scoreBoard->coins -= runnerPrices[*index];
         state->globals->scoreBoard->runnerUnlocked[*index] = true;
+        this->globals->scoreBoard->save(this->globals->scoreBoard);
     }
 }
 

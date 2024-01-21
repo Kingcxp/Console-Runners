@@ -16,6 +16,7 @@
 bool GameState_handleEvent(State *this, const int key) {
     if (key == QUIT || key == QUIT - 32) {
         this->stack->pushState(this->stack, PauseState);
+        this->globals->scoreBoard->save(this->globals->scoreBoard);
         return false;
     }
 

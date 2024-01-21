@@ -7,6 +7,9 @@
 typedef struct ScoreBoard {
     // Methods
 
+    void        save(const struct ScoreBoard *this);
+    void        load(struct ScoreBoard *this);
+
     // Variables
 
     int         coins,
