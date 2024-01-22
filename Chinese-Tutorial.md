@@ -790,6 +790,71 @@ void destroyStateStack(StateStack *stack) {
 &emsp;&emsp;可以看到，这两个类是互相需要的，在一个状态中需要能够获取到状态栈并对它进行一些操作，状态栈当中需要管理当前的所有状态。  
 &emsp;&emsp;同时注意到，不同的状态可能还会需要额外的存储一些临时的只属于当前状态的变量和类，因此我为每一个状态都分配了一组`void *`指针，有需要的时候，可以在这个指针里分配各种变量，这也算是低配版的一种类继承的效果吧。  
 
+### 再来简单地存个档？
+&emsp;&emsp;当你的游戏逐渐复杂，流程逐渐变长，你可能需要将一些东西保存下来，以保证当玩家下次打开游戏的时候，他们所付出的努力还在。  
+&emsp;&emsp;对于我的游戏来说，这实际上很简单！只需要记录下获得的金币数，最高分，当前选中的Runner类型，所有Runner的购买情况就可以了：  
+&emsp;&emsp;我有一个计分板类，恰好保存了所有这些东西，我们可以把保存和加载的方法加进去：  
+```c
+typedef struct ScoreBoard {
+    // Methods
+
+    void        (*save)(const struct ScoreBoard *this);
+    void        (*load)(struct ScoreBoard *this);
+
+    // Variables
+
+    int         coins,
+                highScore,
+                runnerIndex;
+    
+    bool        *runnerUnlocked;
+
+    // In-game variables
+
+    // GameState variables
+
+    float       score;
+    bool        isInvincible;
+    float       invincibleTimer,
+                reviveTimer;
+    int         lastRevivedTimes,
+                revivedTimes;
+} ScoreBoard;
+
+ScoreBoard *createScoreBoard();
+void destroyScoreBoard(ScoreBoard *scoreBoard);
+```
+```c
+// in ScoreBoard.c
+void ScoreBoard_save(const ScoreBoard *this) {
+    FILE *outFile = fopen("save.dat", "w");
+    fprintf(outFile, "%d %d %d\n", this->coins, this->highScore, this->runnerIndex);
+    for (int i = 0; i < Runner_Count; ++i) {
+        if (i == Runner_Count - 1) {
+            fprintf(outFile, "%d\n", this->runnerUnlocked[i]);
+        } else {
+            fprintf(outFile, "%d ", this->runnerUnlocked[i]);
+        }
+    }
+    fclose(outFile);
+}
+
+void ScoreBoard_load(ScoreBoard *this) {
+    FILE *inFile = fopen("save.dat", "r");
+    if (inFile == NULL) {
+        this->save(this);
+        return;
+    }
+    fscanf(inFile, "%d%d%d", &this->coins, &this->highScore, &this->runnerIndex);
+    for (int i = 0; i < Runner_Count; ++i) {
+        fscanf(inFile, "%d", &this->runnerUnlocked[i]);
+    }
+    fclose(inFile);
+}
+```
+&emsp;&emsp;在读取的时候，我们打开一个特定的文件，将数据读取出来，而在保存的时候，我们新建一个同样特定的文件并存入数据。  
+&emsp;&emsp;现在唯一剩下的问题就是保存和载入的时机问题。显然，游戏被打开的时候就应该载入，而保存的问题在这里实际上也十分简单。每当游戏失败结束或者暂停以及购买东西的时候，都需要刷新一下存档的信息，也就是保存。在需要的地方直接调用这个方法就完事了。  
+
 ### 结束了？
 &emsp;&emsp;真的，实际上编写一个小游戏项目只需要知道这些就够了，剩下的就是游戏设计、代码编写、代码编写、代码编写、代码编写、代码编写……  
 &emsp;&emsp;如果你觉得还是没有思路，你可以先浏览一下我的代码，看看我的思路和写法，然后再照猫画虎写一个简单的像是扫雷的小游戏熟悉一下，之后按照自己的想法和实现的要求写就好啦！  
