@@ -6,7 +6,7 @@
 
 </div>
 
-_Console Runners_ is a text-based parkour game written in C. It is designed quite similar to the famous parkour game _Subway Surfers_. Instead of focusing on visual expression, this project is more lightweight and can be played in almost any terminal.
+_Console Runners_ is a text-based parkour game written in C. It is designed quite similar to the famous parkour game _Subway Surfers_. Instead of focusing on visual expression, this project is more lightweight and can be played in almost any terminal that supports ANSI color.
 
 This project aims to learn more about features of C and how to make a game using these features. It is also completed as a course project.
 
