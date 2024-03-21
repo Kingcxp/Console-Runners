@@ -4,6 +4,8 @@
 
 #include <stdbool.h>
 
+static char savePath[1024];
+
 typedef struct ScoreBoard {
     // Methods
 

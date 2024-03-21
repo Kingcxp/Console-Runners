@@ -2,7 +2,7 @@
 #include "resources/runners/RunnerList.h"
 
 void ScoreBoard_save(const ScoreBoard *this) {
-    FILE *outFile = fopen("save.dat", "w");
+    FILE *outFile = fopen(savePath, "w");
     fprintf(outFile, "%d %d %d\n", this->coins, this->highScore, this->runnerIndex);
     for (int i = 0; i < Runner_Count; ++i) {
         if (i == Runner_Count - 1) {
@@ -15,7 +15,7 @@ void ScoreBoard_save(const ScoreBoard *this) {
 }
 
 void ScoreBoard_load(ScoreBoard *this) {
-    FILE *inFile = fopen("save.dat", "r");
+    FILE *inFile = fopen(savePath, "r");
     if (inFile == NULL) {
         this->save(this);
         return;
