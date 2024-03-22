@@ -7,6 +7,10 @@ add_executable(console-runners src/main.c)
 
 if(CMAKE_HOST_SYSTEM MATCHES "Linux")
     target_link_libraries(console-runners m)
+elseif(CMAKE_HOST_SYSTEM MATCHES "Darwin")
+    target_link_libraries(console-runners m)
+elseif(CMAKE_HOST_SYSTEM MATCHES "Windows")
+    target_link_libraries(console-runners uuid ole32)
 endif()
 
 install(TARGETS console-runners
