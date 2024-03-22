@@ -1,11 +1,12 @@
 #include "include/Game.c"
 
 #if defined(_WIN32) || defined(_WIN64)
-    #include <windows.h>
+    #include <KnownFolders.h>
+    #include <shlobj.h>
 #elif defined(__linux__)
-    #include <unistd.h>
-    #include <sys/types.h>
     #include <pwd.h>
+    #include <sys/types.h>
+    #include <unistd.h>
 #elif defined(__APPLE__)
     #include <unistd.h>
 #endif
@@ -16,9 +17,11 @@ int main(int argc, char *argv[]) {
     const char *filename = "/.console-runner.save";
 
 #if defined(_WIN32) || defined(_WIN64)
-    WCHAR widePath[MAX_PATH];
-    if (SUCCEED(SHGetFolderPathW(NULL, CSIDL_MYDOCUMENTS, NULL, 0, widePath))) {
-        wcstombs(path, widePath, sizeof(path));
+    CoInitialize(NULL);
+    PWSTR path = NULL;
+    if (SUCCEEDED(SHGetKnownFolderPath(&FOLDERID_Documents, 0, NULL, &path))) {
+        wcstombs(savePath, path, sizeof(savePath));
+        CoTaskMemFree(path);
     } else {
         printf("Failed to retrieve Documents folder path!\n");
         return EXIT_FAILURE;
