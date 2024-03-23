@@ -9,6 +9,7 @@
     #include <unistd.h>
 #elif defined(__APPLE__)
     #include <unistd.h>
+    #include <pwd.h>
 #endif
 
 int main(int argc, char *argv[]) {
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
         printf("Failed to retrieve home directory path!\n");
         return EXIT_FAILURE;
     }
+    strncpy(savePath, homeDir, sizeof(savePath));
 #endif
     strncat(savePath, filename, sizeof(savePath) - strlen(savePath) * sizeof(char) - 1);
 
