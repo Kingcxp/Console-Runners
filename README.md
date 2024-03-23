@@ -54,12 +54,6 @@ make
 ./ConsoleRunners
 ```
 
-__Or you can just run the pre-build program in Release/:__
-(Windows and Linux x64 only)
-```sh
-./Release/ConsoleRunners
-```
-
 ## Licence
 ```
 MIT License
